@@ -1,0 +1,13 @@
+.fruits-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.fruit-img {
+    margin-bottom: 10px;
+}
+
+.answer-field {
+    width: 80px; /* Define um tamanho fixo */
+    height: 40px; /* Define uma altura fixa */
+}

@@ -1,0 +1,118 @@
+/* CrossWordComponent.css */
+
+.crossword-header {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.crossword-header h1 {
+  font-size: 3em;
+  color: #FFF;
+  font-family: 'Irish Grover';
+}
+
+.crossword-header h2 {
+  font-size: 1.5em;
+  color: #FFF;
+  font-family: 'Irish Grover';
+}
+
+
+.crossword-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #8BC34A;
+  padding: 10px;
+  border-radius: 20px;
+  width: 60%;
+  font-family: 'Irish Grover';
+
+  margin: 20px auto 20px auto;
+}
+
+.crossword-content {
+  display: flex;
+  margin: 2em;
+  align-items: center;
+}
+
+.crossword-grid {
+  width: 40em;
+}
+
+.crossword-container .grid-cell {
+  border: 1px solid #66B2B2; /* Borda leve */
+  color: #333;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.crossword-container .grid-cell[data-highlighted="true"] {
+  background-color: #FFC107; /* Amarelo claro para célula destacada */
+}
+
+.crossword-container .grid-cell[data-correct="true"] {
+  background-color: #A5D6A7; /* Verde claro para células corretas */
+}
+
+.clues {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.clues .clue {
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.direction {
+  margin: 10px;
+}
+
+.direction div {
+  border-radius: 10px;
+  padding: 10px;
+  font-family: 'Coming Soon', sans-serif;
+  font-weight: bold;
+}
+
+.direction .header {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+div.clues {
+  height: 50%;
+  overflow-y: auto;
+}
+
+.images-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 20%
+}
+
+.image-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-number {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.clue-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+}

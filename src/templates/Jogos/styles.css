@@ -1,0 +1,96 @@
+.container-jogos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-family: 'Irish Grover';
+  margin: 40px auto;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.jogo-card{
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 20px !important; 
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  color: slate;
+  cursor: pointer;
+  flex-basis: calc(33% - 40px);
+  margin: 20px;
+  overflow: hidden;
+  padding: 40px;
+  position: relative;
+  transition: 0.5s ease all;
+}
+
+.jogo-card:before {
+  background: white;
+  border-radius: 10px; /* Ajuste no before */
+  height: 5px;
+  content: '';
+  left: 20px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  transition: 0.5s ease all;
+}
+
+.jogo-card h2, 
+.jogo-card p {
+  position: relative;
+  z-index: 2;
+  color: #9e9e9e;
+}
+
+.jogo-card h2 {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  margin: 0 0 20px 0;
+  padding: 0 0 10px 0;
+  text-decoration: none;
+}
+
+.jogo-card:hover h2 {
+  color: #ffffff; /* Efeito de mudança no hover */
+  transition: color 0.3s ease;
+}
+
+.jogo-card.purple:before {
+  background-image: linear-gradient(153deg, #EF33F2 0%, #3544DC 95%);
+}
+
+.jogo-card.yellow:before {
+  background-image: linear-gradient(153deg, #F8C332 0%, #FB8332 95%);
+}
+
+.jogo-card.green:before {
+  background-image: linear-gradient(153deg, #8ADC32 0%, #25C7A2 95%);
+}
+
+.jogo-card:hover {
+  border: 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  color: white;
+  transform: scale(1.05);
+  z-index: 2;
+}
+
+.jogo-card:hover:before {
+  border-radius: 20px;
+  left: 0;
+  height: 100%;
+  right: 0;
+  top: 0;
+}
+
+@media (max-width: 1200px) {
+  .main-container {
+    flex-direction: column;
+    max-width: 600px;
+  }
+  
+  .activity-card {
+    margin: 0 0 10px 0;
+    width: 100%;
+  }
+}

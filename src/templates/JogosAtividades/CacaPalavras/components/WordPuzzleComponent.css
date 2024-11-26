@@ -1,0 +1,43 @@
+.root {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+  flex-direction: column;
+}
+
+* {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+
+.letter-wrapper {
+  /* background: rgb(1, 146, 98); */
+  padding: 5px;
+  display: inline-block;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  cursor: default;
+}
+
+
+.letter-wrapper:hover {
+  /* background: rgb(0, 218, 145) !important; */
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  cursor: pointer;
+}
+
+
+table,
+tr,
+td {
+  border: 1px inset rgb(255, 255, 255);
+  border-collapse: collapse;
+  margin: auto;
+}

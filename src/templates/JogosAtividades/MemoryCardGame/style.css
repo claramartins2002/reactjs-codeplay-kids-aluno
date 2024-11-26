@@ -1,0 +1,29 @@
+.header {
+  font-family: 'Irish Grover';
+}
+.memory-game {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  font-family: 'Irish Grover';
+}
+.btn-memory-game {
+  background: none;
+  border: 2px solid #d15b5b;
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: #d15b5b;
+  font-weight: bold;
+  font-size: 1em;
+}
+.btn-memory-game:hover {
+  background: #d15b5b;
+  color: #fff;
+}
+.card-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
+}

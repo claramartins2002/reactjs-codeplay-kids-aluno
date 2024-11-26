@@ -1,0 +1,108 @@
+.ways-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.way-option {
+  cursor: pointer;
+  margin-left: 20px;
+  margin-right: 20px;
+  color: black;
+}
+
+.way-text {
+  text-decoration: none;
+}
+
+.way-text.line-through {
+  text-decoration: line-through;
+}
+
+.answer-words-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 1.5rem;
+  margin: auto;
+  margin-top: 1%;
+  font-size: 1.2rem;
+  border: 0.2rem solid rgb(0, 218, 145);
+}
+
+.cacapalavras-game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.start-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10; /* Garantir que o botão esteja sobre o jogo */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.start-button:hover {
+  background-color: #0056b3;
+}
+
+.word-puzzle-wrapper.inactive {
+  opacity: 0.3; /* Reduz opacidade quando o jogo está desabilitado */
+  pointer-events: none; /* Desabilita interação */
+  transition: opacity 0.5s ease;
+}
+
+.word-puzzle-wrapper.active {
+  opacity: 1; /* Opacidade normal quando o jogo está ativo */
+  pointer-events: auto; /* Ativa interação */
+  transition: opacity 0.5s ease;
+}
+
+.word-puzzle.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.word-puzzle.active {
+  opacity: 1;
+}
+
+.game-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.hidden {
+  display: none;
+}
+
+.answer-word {
+  margin-top: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+  color: black;
+}
+
+.answer-text {
+  text-decoration: none;
+  font-family: 'Irish Grover';
+}
+
+.answer-text.line-through {
+  text-decoration: line-through;
+}

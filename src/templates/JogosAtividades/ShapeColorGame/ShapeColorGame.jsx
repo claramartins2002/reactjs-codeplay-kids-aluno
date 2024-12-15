@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button, Card, CardContent, Typography, Grid, Box } from '@mui/material';
 import { green, red, blue, yellow, pink, purple, orange } from '@mui/material/colors';
+import { AuthContext } from '../../../AuthContext';
+import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
 // Conjunto de formas e cores para reconhecimento
 const shapes = ['círculo', 'quadrado', 'triângulo'];
@@ -81,19 +84,25 @@ const ShapeColorGame = () => {
   const [errors, setErrors] = useState(0);
   const [message, setMessage] = useState('');
   const [questionCount, setQuestionCount] = useState(1);
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
-  const [gameFinished, setGameFinished] = useState(false);
-
-  // Inicia o cronômetro na primeira questão
-  useEffect(() => {
-    if (questionCount === 1) {
-      setStartTime(Date.now());
-    }
-  }, [questionCount]);
+  const API_URL = 'http://localhost:8080/relatorio'; // Atualize com a URL do seu backend
+  const { studentId } = useContext(AuthContext);
+  const [searchParams] = useSearchParams();
+  const activityId = searchParams.get('id'); // Captura o 'id' da atividade
+  const [gameOver, setGameOver] = useState(false);
+  const [feedback, setFeedback] = useState('');
+  const [elapsedTime, setElapsedTime] = useState(0); // Cronômetro
+// Controle do cronômetro
+useEffect(() => {
+  const timer = setInterval(() => {
+      if (!gameOver) {
+          setElapsedTime((prevTime) => prevTime + 1);
+      }
+  }, 1000);
+  return () => clearInterval(timer);
+}, [gameOver]);
 
   const handleAnswer = (answer) => {
-    if (gameFinished) return;
+    if (gameOver) return;
 
     if (answer === currentShapeColor.correctLabel) {
       setScore(score + 1);
@@ -111,21 +120,38 @@ const ShapeColorGame = () => {
       }, 1000);
     } else {
       // Finaliza o jogo na última questão
-      setEndTime(Date.now());
-      setGameFinished(true);
+      setGameOver(true);
     }
   };
 
-  const getElapsedTime = () => {
-    if (startTime && endTime) {
-      const elapsed = Math.floor((endTime - startTime) / 1000);
-      const minutes = Math.floor(elapsed / 60);
-      const seconds = elapsed % 60;
-      return `${minutes}m ${seconds}s`;
-    }
-    return 'Calculando...';
+ // Função para enviar os dados para o backend
+ const saveGameReport = async () => {
+  const relatorio = {
+      aluno: {id: studentId}, // ID do aluno
+      tipoAtividade: 'Operações Matemáticas', // Tipo da atividade
+      pontuacao: score,
+      erros: errors,
+      acertos: score,
+      tentativas: questionCount,
+      tempoGasto: elapsedTime,
+      atividade: { id: activityId}
   };
 
+  try {
+      const response = await axios.post(API_URL, relatorio);
+      console.log('Relatório salvo com sucesso:', response.data);
+      setFeedback(response.data);
+  } catch (error) {
+      console.error('Erro ao salvar o relatório:', error);
+  }
+};
+
+// Salvar o relatório quando o jogo terminar
+useEffect(() => {
+  if (gameOver) {
+      saveGameReport();
+  }
+}, [gameOver]);
   return (
     <Box
       sx={{
@@ -140,7 +166,7 @@ const ShapeColorGame = () => {
       <Typography variant="h4" sx={{ mb: 2, color: blue[700], fontWeight: 'bold' }}>
         Jogo de Formas e Cores 🎨🔵
       </Typography>
-      {!gameFinished ? (
+      {!gameOver ? (
         <>
           <Card
             sx={{
@@ -205,11 +231,10 @@ const ShapeColorGame = () => {
             Pontuação final: {score}/15
           </Typography>
           <Typography variant="h6" sx={{ mt: 2, color: blue[900] }}>
-            Tempo total: {getElapsedTime()}
+            Tempo total: {elapsedTime} s
           </Typography>
-          <Typography variant="h6" sx={{ mt: 1, color: red[700] }}>
-            Total de erros: {errors}
-          </Typography>
+          <Typography> {feedback}</Typography>
+          
         </>
       )}
     </Box>

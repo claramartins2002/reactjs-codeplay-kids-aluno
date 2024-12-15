@@ -2,7 +2,7 @@
   font-family: 'Irish Grover';
 }
 .memory-game {
-  max-width: 600px;
+  max-width: 500px;
   margin: 40px auto;
   padding: 20px;
   background: #fff;
@@ -26,4 +26,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
+}
+
+h3 {
+  padding: 3%;
 }

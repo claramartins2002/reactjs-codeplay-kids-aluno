@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button, Card, CardContent, Typography, Box } from '@mui/material';
 import Grid from '@mui/material/Grid2';
+import { AuthContext } from '../../../AuthContext';
+import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
 // Conjunto de imagens e palavras para associação
 const imageWordPairs = [
@@ -33,21 +36,28 @@ const ImageWordAssociationGame = () => {
     const [score, setScore] = useState(0);
     const [errors, setErrors] = useState(0);
     const [message, setMessage] = useState('');
-    const [isGameOver, setIsGameOver] = useState(false);
-    const [startTime, setStartTime] = useState(null);
-    const [endTime, setEndTime] = useState(null);
+    const [elapsedTime, setElapsedTime] = useState(0); // Cronômetro
+    const [gameOver, setGameOver] = useState(false); // Estado para finalizar o jogo
+    const API_URL = 'http://localhost:8080/relatorio'; // Atualize com a URL do seu backend
+    const { studentId} = useContext(AuthContext);
+    const [searchParams] = useSearchParams();
+    const activityId = searchParams.get('id'); // Captura o 'id' da atividade
+    const [feedback, setFeedback] = useState('');
 
     useEffect(() => {
         setShuffledLetters(getShuffledLetters(currentPair.correctWord));
         setSelectedLetters([]);
     }, [currentPair]);
 
+    // Controle do cronômetro
     useEffect(() => {
-        // Inicia o cronômetro no início do jogo
-        if (currentIndex === 0 && !startTime) {
-            setStartTime(Date.now());
-        }
-    }, [currentIndex, startTime]);
+        const timer = setInterval(() => {
+            if (!gameOver) {
+                setElapsedTime((prevTime) => prevTime + 1);
+            }
+        }, 1000);
+        return () => clearInterval(timer);
+    }, [gameOver]);
 
     useEffect(() => {
         // Verifica automaticamente a palavra quando todos os espaços estão preenchidos
@@ -100,21 +110,38 @@ const ImageWordAssociationGame = () => {
             setCurrentIndex(nextIndex);
             setCurrentPair(imageWordPairs[nextIndex]);
         } else {
-            setIsGameOver(true); // Jogo terminou quando todos os pares são usados
-            setEndTime(Date.now()); // Finaliza o cronômetro
+            setGameOver(true); // Jogo termina quando todos os pares são usados
         }
     };
+    
 
-    const getElapsedTime = () => {
-        if (startTime && endTime) {
-            const elapsed = Math.floor((endTime - startTime) / 1000);
-            const minutes = Math.floor(elapsed / 60);
-            const seconds = elapsed % 60;
-            return `${minutes}m ${seconds}s`;
-        }
-        return 'Calculando...';
+   // Função para enviar os dados para o backend
+   const saveGameReport = async () => {
+    const relatorio = {
+        aluno: {id: studentId}, // ID do aluno
+        tipoAtividade: 'Operações Matemáticas', // Tipo da atividade
+        pontuacao: score,
+        erros: errors,
+        acertos: score,
+        tempoGasto: elapsedTime,
+        atividade: { id: activityId}
     };
 
+    try {
+        const response = await axios.post(API_URL, relatorio);
+        console.log('Relatório salvo com sucesso:', response.data);
+        setFeedback(response.data);
+    } catch (error) {
+        console.error('Erro ao salvar o relatório:', error);
+    }
+};
+
+// Salvar o relatório quando o jogo terminar
+useEffect(() => {
+    if (gameOver) {
+        saveGameReport();
+    }
+}, [gameOver]);
     return (
         <Box
             sx={{
@@ -130,16 +157,17 @@ const ImageWordAssociationGame = () => {
  }}>
                 Que animal é esse?
             </Typography>
-            {isGameOver ? (
+            {gameOver ? (
                 <>
                     <Typography variant="h5" sx={{ mt: 2, color: '#38aa38' }}>
                         Fim do Jogo! 🎉
                     </Typography>
+                    <Typography> {feedback}</Typography>
                     <Typography variant="h6" sx={{ mt: 2, color: '#587ee6' }}>
                         Pontuação final: {score}
                     </Typography>
                     <Typography variant="h6" sx={{ mt: 2, color: '#587ee6' }}>
-                        Tempo total: {getElapsedTime()}
+                        Tempo total: {elapsedTime}s
                     </Typography>
                     <Typography variant="h6" sx={{ mt: 1, color: '#e44d4d' }}>
                         Total de erros: {errors}

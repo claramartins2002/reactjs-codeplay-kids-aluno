@@ -91,19 +91,18 @@ function PuzzleGame() {
   return (
     <div className="game">
       {!isStarted ? (
-        <>
-          <button className="start-button" onClick={startPuzzle}>Iniciar Quebra-Cabeça</button>
+        <>         
           <h3>Atenção! Ao iniciar o jogo, o cronômetro será ativado</h3>
+          <button className="start-button" onClick={startPuzzle}>Iniciar Quebra-Cabeça</button>
         </>
       ) : isCompleted ? (
-        <div>
-          <h2>Parabéns! Você completou o quebra-cabeça!</h2>
-          <Typography>{feedback}</Typography>
-          <button className="start-button" onClick={() => {setIsStarted(false); setTimeElapsed(0)}}>Jogar Novamente</button>
+        <div className="game-menu">
+          <Typography variant="h6" sx={{fontFamily: 'Irish Grover', marginBottom: '5%'}}>{feedback}</Typography>
+          <center><button onClick={() => {setIsStarted(false); setTimeElapsed(0)}} >Jogar Novamente</button></center>
         </div>
       ) : (
         <>
-          <Typography variant="h6">Tempo decorrido: {timeElapsed}s</Typography>
+         <center> <Typography variant="h6" sx={{  fontFamily: 'Irish Grover'}}>Tempo decorrido: {timeElapsed}s</Typography></center>
           {isCompleted && <Typography>Você completou o jogo em {timeElapsed} segundos!</Typography>}
           {selectedImage && (
             <JigsawPuzzle

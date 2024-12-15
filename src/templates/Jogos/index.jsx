@@ -5,7 +5,7 @@ import { AuthContext } from '../../AuthContext';
 
 function Jogos() {
   const [jogosPendentes, setJogosPendentes] = useState([]);
-  const { studentId} = useContext(AuthContext);
+  const { studentId, studentName} = useContext(AuthContext);
 
   useEffect(() => {
     const fetchJogosPendentes = async () => {
@@ -40,20 +40,24 @@ function Jogos() {
     'Palavras Cruzadas': '/jogos/crossword',
     'Caça Palavras': '/jogos/caca-palavras',
     'Formas Geométricas e Cores': '/jogos/shape-color',
-    'Jogo das imagens': '/jogos/imagem-palavra-associacao',
-    'Jogo de Contagem': '/jogos/counting',
+    'Jogo das Imagens': '/jogos/imagem-palavra-associacao',
+    'Jogo da Contagem': '/jogos/counting',
   };
 
-  return (
+  return (<>
+        <h3 class="submenu">Olá {studentName}! Aqui estão suas atividades pendentes</h3>
     <div className="container-jogos">
       {jogosPendentes.map((jogo) => (
         <div key={jogo.id} className={`jogo-card ${jogo.cor || 'green'}`}>
    <NavLink className='is-active' to={`${jogoRoutes[jogo.nome]}?id=${jogo.id}`}>
+      <center><img src={jogo.icone} alt='icon' width='100px' height='100px'/></center>
       <h2>{jogo.nome}</h2>
     </NavLink>
         </div>
       ))}
     </div>
+    </>
+
   );
 }
 

@@ -160,7 +160,7 @@ useEffect(() => {
       <header className="crossword-header">
         <h1>Palavras Cruzadas</h1>
         <h2>{gameOver ? 'Fim de Jogo' : 'Resolva as palavras'}</h2>
-        <Typography>Atenção! Não precisa escrever as palavras com acentos ou ç!!</Typography>
+        <Typography color='white'>Atenção! Não precisa escrever as palavras com acentos ou ç!!</Typography>
       </header>
 
       <ThemeProvider theme={theme}>

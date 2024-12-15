@@ -94,3 +94,14 @@
     width: 100%;
   }
 }
+.submenu{
+  font-family: 'Irish Grover';
+  background-color: #FB8332;
+  color: white;
+  padding: 1%;
+  text-align: center;
+}
+
+img {
+  padding: 5%;
+}

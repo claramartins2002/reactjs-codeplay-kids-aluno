@@ -57,7 +57,6 @@ export const Container = memo(function Container() {
     if (allDustbinsFilled()) {
       setGameCompleted(true);
       saveGameReport();
-      setElapsedTime(0);
     }
   }, [dustbins, allDustbinsFilled]);
 
@@ -100,6 +99,7 @@ export const Container = memo(function Container() {
     setDroppedBoxNames([]);
     setGameCompleted(false);
     setGameStarted(true);
+    setElapsedTime(0);
   };
 
   // Função para enviar os dados para o backend
@@ -123,10 +123,13 @@ export const Container = memo(function Container() {
 
   return (
     <div className="game-dnd-container">
-      {!gameStarted && (
-        <button className="start-button" onClick={startNewGame}>
+      {!gameStarted && (<>
+        <h3>Arraste as frutas para sua sombra! 🍇🍌🍉🍎</h3>
+        <button onClick={startNewGame} style={{ padding: '1.5%', fontSize: '1.3rem', fontFamily: 'Irish Grover'}}>
           Iniciar Jogo
         </button>
+
+        </>
       )}
       {gameStarted && (
         <>
@@ -159,13 +162,13 @@ export const Container = memo(function Container() {
       )}
       {gameCompleted && (
         <>
-          <div className="game-completed">
+          <div style={{fontSize: '1.3rem', fontFamily: 'Irish Grover', padding: '1%'}}>
             <h2>Parabéns! Você completou o jogo!</h2>
             <p>Tempo gasto: { elapsedTime } segundos</p>
-            <Typography> {feedback}</Typography>
-            <button onClick={startNewGame} className="start-button">
+            <p> {feedback}</p>
+            <center><button onClick={startNewGame} style={{ padding: '1.5%', fontSize: '1.3rem', fontFamily: 'Irish Grover'}}>
               Jogar Novamente
-            </button>
+            </button></center>
           </div>
           <Confetti width={width} height={height} />
         </>

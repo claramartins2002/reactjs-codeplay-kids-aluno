@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button, Card, CardContent, Typography, Box, TextField } from '@mui/material';
 import { green, red, blue, yellow, orange } from '@mui/material/colors';
 import ConfettiExplosion from 'react-confetti-explosion';
 import './CountingGame.css';
+import { AuthContext } from '../../../AuthContext';
+import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
 const getRandomCount = () => Math.floor(Math.random() * 5) + 1;
 
@@ -32,8 +35,14 @@ const CountingGame = () => {
     const [message, setMessage] = useState('');
     const [userAnswers, setUserAnswers] = useState({ Apple: '', Banana: '', Pear: '' });
     const [showConfetti, setShowConfetti] = useState(false);
-    const [startTime, setStartTime] = useState(null);
-    const [endTime, setEndTime] = useState(null);
+    const [elapsedTime, setElapsedTime] = useState(0);
+    const API_URL = 'http://localhost:8080/relatorio'; // Atualize com a URL do seu backend
+    const { studentId } = useContext(AuthContext);
+    const [searchParams] = useSearchParams();
+    const activityId = searchParams.get('id'); // Captura o 'id' da atividade
+    const [gameOver, setGameOver] = useState(false);
+    const [questionCount, setQuestionCount] = useState(1);
+    const [feedback, setFeedback] = useState('');
 
     const countFruitsByType = () => {
         return FRUIT_TYPES.map((fruit) => ({
@@ -49,10 +58,13 @@ const CountingGame = () => {
     }, [fruits]);
 
     useEffect(() => {
-        if (level === 0 && startTime === null) {
-            setStartTime(Date.now()); // Registra o início do jogo
-        }
-    }, [level, startTime]);
+        const timer = setInterval(() => {
+            if (!gameOver) {
+                setElapsedTime((prevTime) => prevTime + 1);
+            }
+        }, 1000);
+        return () => clearInterval(timer);
+    }, [gameOver]);
 
     const handleInputChange = (fruitName, value) => {
         setUserAnswers({ ...userAnswers, [fruitName]: value });
@@ -71,33 +83,51 @@ const CountingGame = () => {
             setScore(score + 1);
             setMessage('Acertou! 🎉');
             setShowConfetti(true);
-            setLevel(level + 1);
             setTimeout(() => setShowConfetti(false), 2000);
         } else {
             setErrors(errors + 1);
             setMessage('Errou! 😞');
         }
 
-        setTimeout(() => {
-            setMessage('');
-            setFruits(generateFruits(level + 1));
-            setUserAnswers({ Apple: '', Banana: '', Pear: '' });
-        }, 1500);
-
-        if (level + 1 === 15) {
-            setEndTime(Date.now()); // Registra o fim do jogo
+        if (questionCount < 5) {
+            setTimeout(() => {
+                setMessage('');
+                setFruits(generateFruits(level + 1));
+                setUserAnswers({ Apple: '', Banana: '', Pear: '' });
+                setLevel(level + 1);
+                setQuestionCount(questionCount + 1);
+            }, 1500);
+        } else {
+            setGameOver(true);
         }
     };
 
-    const getElapsedTime = () => {
-        if (startTime && endTime) {
-            const elapsed = Math.floor((endTime - startTime) / 1000);
-            const minutes = Math.floor(elapsed / 60);
-            const seconds = elapsed % 60;
-            return `${minutes}m ${seconds}s`;
+    const saveGameReport = async () => {
+        const relatorio = {
+            aluno: { id: studentId },
+            tipoAtividade: 'Operações Matemáticas',
+            pontuacao: score,
+            erros: errors,
+            acertos: score,
+            tentativas: questionCount,
+            tempoGasto: elapsedTime,
+            atividade: { id: activityId },
+        };
+
+        try {
+            const response = await axios.post(API_URL, relatorio);
+            console.log('Relatório salvo com sucesso:', response.data);
+            setFeedback(response.data);
+        } catch (error) {
+            console.error('Erro ao salvar o relatório:', error);
         }
-        return 'Calculando...';
     };
+
+    useEffect(() => {
+        if (gameOver) {
+            saveGameReport();
+        }
+    }, [gameOver]);
 
     return (
         <Box
@@ -114,7 +144,7 @@ const CountingGame = () => {
             <Typography variant="h4" sx={{ mb: 2, color: blue[700], fontWeight: 'bold' }}>
                 Jogo de Contagem de Frutas 🍎🍌🍐
             </Typography>
-            {level >= 15 ? (
+            {gameOver ? (
                 <>
                     <Typography variant="h5" sx={{ color: green[700], mt: 2 }}>
                         Parabéns! Você completou o jogo! 🎉
@@ -122,11 +152,12 @@ const CountingGame = () => {
                     <Typography variant="h6" sx={{ color: blue[900], mt: 2 }}>
                         Pontuação final: {score}
                     </Typography>
+                    <Typography> {feedback}</Typography>
                     <Typography variant="h6" sx={{ color: red[700], mt: 1 }}>
                         Total de erros: {errors}
                     </Typography>
                     <Typography variant="h6" sx={{ color: blue[600], mt: 1 }}>
-                        Tempo total: {getElapsedTime()}
+                        Tempo total: {elapsedTime} segundos
                     </Typography>
                 </>
             ) : (
@@ -146,6 +177,7 @@ const CountingGame = () => {
                                 alignItems: 'center',
                                 flexWrap: 'wrap',
                                 margin: '10px',
+                                fontFamily: 'Irish Grover'
                             }}
                         >
                             {fruits.map((fruit, index) => (
@@ -155,7 +187,7 @@ const CountingGame = () => {
                         <div className="fruits-container">
                             {FRUIT_TYPES.map((fruit) => (
                                 <Box key={fruit.name} sx={{ marginBottom: 2 }}>
-                                    <Typography variant="h6" sx={{ color: orange[900] }}>
+                                    <Typography variant="h6" sx={{ color: orange[900]}}>
                                         Quantas {fruit.name === 'Apple' ? 'Maçãs' : fruit.name === 'Banana' ? 'Bananas' : 'Peras'}?
                                     </Typography>
                                     <TextField
@@ -163,7 +195,9 @@ const CountingGame = () => {
                                         variant="outlined"
                                         value={userAnswers[fruit.name]}
                                         onChange={(e) => handleInputChange(fruit.name, e.target.value)}
-                                        sx={{ width: '100%', backgroundColor: 'white' }}
+                                        sx={{ width: '100%', backgroundColor: 'white'
+                                        }}
+
                                     />
                                 </Box>
                             ))}
@@ -174,7 +208,7 @@ const CountingGame = () => {
                             sx={{
                                 backgroundColor: green[600],
                                 color: 'white',
-                                fontWeight: 'bold',
+                                fontFamily: 'Irish Grover',
                                 mt: 2,
                                 '&:hover': { backgroundColor: green[800] },
                             }}

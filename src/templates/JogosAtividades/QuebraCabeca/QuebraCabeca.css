@@ -1,8 +1,21 @@
+body {
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(231,231,246,1) 35%, rgba(175,223,253,1) 100%);
+
+}
 .game {
-  max-width: 50%;
+  max-width: 500px;
+  max-height: 500px;
   margin: 40px auto;
-  padding: 20px;
-  background: #fff;
+  padding: 5%;
   font-family: 'Irish Grover';
 
+}
+
+.game-menu {
+  max-width: 70%;
+  max-height: 100%;
+}
+.start-button {
+  padding: 5%;
+  margin-top: 5%;
 }

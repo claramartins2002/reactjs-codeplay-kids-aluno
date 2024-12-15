@@ -154,8 +154,8 @@ const MemoryCardGame = () => {
       <center><h3>Tentativas: {turns}</h3></center>
       {gameCompleted && (
         <div className="game-completed">
-          <h2>Parabéns! Você completou o jogo!</h2>
-          <Typography> {feedback}</Typography>
+          <h3>Parabéns! Você completou o jogo!</h3>
+          <Typography sx={{fontFamily: 'Irish Grover'}}> {feedback}</Typography>
           <button className="start-button" onClick={shuffleCards}>Jogar Novamente</button>
         </div>
       )}

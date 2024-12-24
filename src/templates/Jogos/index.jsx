@@ -44,21 +44,20 @@ function Jogos() {
     'Jogo da Contagem': '/jogos/counting',
   };
 
-  return (<>
-        <h3 class="submenu">Olá {studentName}! Aqui estão suas atividades pendentes</h3>
-    <div className="container-jogos">
-      {jogosPendentes.map((jogo) => (
-        <div key={jogo.id} className={`jogo-card ${jogo.cor || 'green'}`}>
-   <NavLink className='is-active' to={`${jogoRoutes[jogo.nome]}?id=${jogo.id}`}>
-      <center><img src={jogo.icone} alt='icon' width='100px' height='100px'/></center>
-      <h2>{jogo.nome}</h2>
-    </NavLink>
-        </div>
-      ))}
-    </div>
+  return (
+    <>
+      <h3 class="submenu">Olá {studentName}! Aqui estão suas atividades pendentes</h3>
+      <div className="container-jogos">
+        {jogosPendentes.map((jogo) => (
+          <div key={jogo.id} className={`jogo-card ${jogo.cor || 'green'}`}>
+            <NavLink className='is-active' to={`${jogoRoutes[jogo.nome]}?id=${jogo.id}`}>
+              <center><img src={jogo.icone} alt='icon' width='100px' height='100px'/></center>
+              <h2>{jogo.nome}</h2>
+            </NavLink>
+          </div>
+        ))}
+      </div>
     </>
-
-  );
-}
+  )}
 
 export default Jogos;

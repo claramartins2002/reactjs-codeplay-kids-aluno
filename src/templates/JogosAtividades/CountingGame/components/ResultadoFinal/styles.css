@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Gorditas:wght@400;700&display=swap');
+
+.relatorio-final-jogo {
+  background-color: #FFF;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.ribbon {
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff;
+}
+.ribbon {
+  --s: 1.8em; /* the ribbon size */
+  --d: .8em;  /* the depth */
+  --c: .8em;  /* the cutout part */
+  
+  padding: 0 calc(var(--s) + .5em) var(--d);
+  line-height: 1.8;
+  background:
+    conic-gradient(at left  var(--s) bottom var(--d),
+     #0000 25%,#0008 0 37.5%,#0004 0) 0   /50% 100% no-repeat,
+    conic-gradient(at right var(--s) bottom var(--d),
+     #0004 62.5%,#0008 0 75%,#0000 0) 100%/50% 100% no-repeat;
+  clip-path: polygon(0 var(--d), var(--s) var(--d),var(--s) 0,calc(100% - var(--s)) 0,calc(100% - var(--s)) var(--d),100% var(--d),calc(100% - var(--c)) calc(50% + var(--d)/2),100% 100%,calc(100% - var(--s) - var(--d)) 100%,calc(100% - var(--s) - var(--d)) calc(100% - var(--d)),calc(var(--s) + var(--d)) calc(100% - var(--d)),calc(var(--s) + var(--d)) 100%,0 100%,var(--c) calc(50% + var(--d)/2));
+  background-color: #2d8b15; /* the main color */
+  width: fit-content;
+  font-family: 'Gorditas';
+}
+
+.resultado-final-tempo {
+  color: #1e88e5;
+  text-align: center;
+  font-family: 'Gorditas';
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  width: 55%;
+  margin: auto;
+}

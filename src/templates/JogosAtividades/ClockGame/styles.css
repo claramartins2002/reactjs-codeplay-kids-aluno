@@ -1,0 +1,190 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Coming+Soon&family=Itim&family=Modak&display=swap');
+.App {
+  font-family: sans-serif;
+}
+
+.clock {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
+  font-size: 24px;
+  color: #444;
+  text-align: center;
+  border: 1.2rem solid #f7c213;
+}
+
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-container {
+  top: 70%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+
+.clock::after {
+  background: #aaa;
+  content: "";
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff;
+}
+
+.hour_hand {
+  position: absolute;
+  width: 17px;
+  border-radius: 10px;
+  height: 60px;
+  background: #f35345;
+  top: 28%;
+  left: 47%;
+  transform-origin: bottom;
+}
+
+.input-hour {
+  color: #f35345;
+  background: #ffcbcf;
+}
+
+.min_hand {
+  position: absolute;
+  width: 17px;
+  border-radius: 10px;
+  height: 80px;
+  background: #69adf7;
+  top: 20%;
+  left: 47%;
+  transform-origin: bottom;
+}
+
+.input-min {
+  background: #bbdcfd;
+  color: #69adf7;
+}
+
+.input-hour, .input-min {
+  border: none;
+  height: 60px;
+  border-radius: 13px;
+  font-family: "Itim", cursive;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.sec_hand {
+  position: absolute;
+  width: 2px;
+  height: 118px;
+  background: red;
+  top: 10.5%;
+  left: 50%;
+  transform-origin: bottom;
+}
+
+.clock-number {
+  font-family: "Itim", cursive;
+  position: absolute;
+  font-weight: 800;
+  color: #f8ce45;
+}
+
+.time-separator {
+  margin: 10px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.clock-game-button {
+  margin: 10px;
+  height: 55px;
+  width: 60px;
+  font-size: 20px;
+  border-radius: 15px;
+  font-family: "Itim", cursive;
+  border-bottom: 5px solid #f7c203;
+  background: #f8ce45;
+}
+
+.clock-game-button:hover {
+  background: #f8ce45;
+}
+
+.twelve {
+  top: 10px;
+  left: 46%;
+}
+
+.one {
+  top: 10%;
+  right: 26%;
+}
+
+.eleven {
+  top: 10%;
+  left: 26%;
+}
+
+.two {
+  top: 25%;
+  right: 10%;
+}
+
+.three {
+  right: 15px;
+  top: 46%;
+}
+
+.four {
+  right: 30px;
+  top: 66%;
+}
+
+.five {
+  right: 73px;
+  top: 78%;
+}
+
+.six {
+  bottom: 5px;
+  left: 46%;
+}
+
+.seven {
+  left: 73px;
+  top: 78%;
+}
+
+.eight {
+  left: 30px;
+  top: 66%;
+}
+
+.nine {
+  left: 15px;
+  top: 46%;
+}
+
+.ten {
+  top: 25%;
+  left: 10%;
+}

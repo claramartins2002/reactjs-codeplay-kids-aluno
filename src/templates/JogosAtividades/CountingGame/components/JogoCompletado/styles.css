@@ -1,0 +1,23 @@
+.score-board {
+  display: flex;
+  justify-content: space-between;
+  width: 20%;
+}
+
+.score {
+  background: #1f8fff;
+}
+
+.erros {
+  background: #f34545;
+}
+
+.score, .erros {
+  width: 30%;
+  padding: 5px;
+  border-radius: 10px;
+  font-family: 'Gorditas';
+  color: #FFF;
+  font-size: 20px;
+  margin-top: 2rem;
+}

@@ -64,6 +64,9 @@ const ambientAudio = new Audio(trilha);
 useEffect(() => {
     ambientAudio.loop = true;
     ambientAudio.volume = 0.5;
+    ambientAudio.play().catch((error) => {
+      console.error('Erro ao reproduzir áudio:', error);
+  });
 
     return () => {
         ambientAudio.pause();

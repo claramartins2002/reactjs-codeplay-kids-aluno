@@ -18,6 +18,7 @@ import SubsMathGame from './templates/JogosAtividades/SubsMathGame/SubsMathGame'
 import MultMathGame from './templates/JogosAtividades/MultMathGame/MultMathGame';
 import DivMathGame from './templates/JogosAtividades/DivMathGame/DivMathGame';
 import Navbarmenu from './components/menu';
+import Clock from './templates/JogosAtividades/ClockGame/ClockGame';
 function App() {
   const { isAuthenticated, loading } = useContext(AuthContext); // Acessa o estado de autenticação e carregamento
   console.log(isAuthenticated);
@@ -34,7 +35,6 @@ function App() {
 
         {/* Rotas Menu*/}
         <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} /> {/* Impede de ir para login se já estiver autenticado */}
-
         <Route path="/" element={isAuthenticated ? <Jogos /> : <Navigate to="/login" />} />
 
         {/* Rotas Jogos*/}
@@ -52,6 +52,7 @@ function App() {
         <Route path="/jogos/counting" element={isAuthenticated ? <CountingGame /> : <Navigate to="/login" />} />
         <Route path="/jogos/drawing" element={isAuthenticated ? <DrawingApp /> : <Navigate to="/login" />} />
         <Route path="/jogos/store" element={isAuthenticated ? <StoreGame /> : <Navigate to="/login" />} />
+        <Route path="/jogos/relogio-horas" element={isAuthenticated ? <Clock /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
 

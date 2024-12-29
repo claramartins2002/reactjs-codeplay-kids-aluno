@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./styles.css";
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, Typography } from '@mui/material';
-import { WordPuzzleComponent } from "./components/WordPuzzleComponent";
+import { WordPuzzleComponent } from "./components/WordPuzzleComponent/WordPuzzleComponent";
 import Timer from "../Timer";
 import { AuthContext } from "../../../AuthContext";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
+import RelatorioFinal from "./components/RelatorioFinal/RelatorioFinal";
 
 export const CacaPalavras = () => {
   const answerWords = [
@@ -199,20 +199,13 @@ export const CacaPalavras = () => {
           }}
         />
       </div>
-      <Dialog open={dialogOpen} onClose={handleEndGame}>
-        <DialogTitle sx={{ fontFamily: 'Irish Grover', fontSize: '25px', textAlign: 'center' }}>Parabéns!</DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{ fontFamily: 'Coming Soon' }}>
-            Você encontrou todas as palavras em {elapsedTime} segundos! Deseja jogar novamente ou finalizar o jogo?
-            <Typography> {feedback}</Typography>
-
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleRestartGame} sx={{ backgroundColor: '#00C3FF', color: '#FFF', borderRadius: '10px', fontFamily: 'Irish Grover' }}>Reiniciar Jogo</Button>
-          <Button onClick={handleEndGame} sx={{ backgroundColor: 'rgb(0, 218, 145)', color: '#FFF', borderRadius: '10px', fontFamily: 'Irish Grover' }}>Finalizar Jogo</Button>
-        </DialogActions>
-      </Dialog>
+      <RelatorioFinal 
+        dialogOpen={dialogOpen} 
+        handleEndGame={handleEndGame} 
+        feedback={feedback} 
+        handleRestartGame={handleRestartGame} 
+        elapsedTime={elapsedTime}
+      />
     </div>
   );
 };

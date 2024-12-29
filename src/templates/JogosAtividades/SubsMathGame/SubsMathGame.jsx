@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button, Card, CardContent, Typography, Grid, Box, LinearProgress } from '@mui/material';
-import { green, red, blue, yellow, grey } from '@mui/material/colors';
+import { green, red, blue } from '@mui/material/colors';
 import trilha from '../../../sound/trilha.mp3';
 import acerto from '../../../sound/acerto.mp3';
 import erro from '../../../sound/erro.mp3';

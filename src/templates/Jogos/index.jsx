@@ -42,6 +42,7 @@ function Jogos() {
     'Formas Geométricas e Cores': '/jogos/shape-color',
     'Jogo das Imagens': '/jogos/imagem-palavra-associacao',
     'Jogo da Contagem': '/jogos/counting',
+    'Que horas são ?': '/jogos/relogio-horas'
   };
 
   return (

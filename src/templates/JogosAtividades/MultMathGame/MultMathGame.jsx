@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Button, Card, CardContent, Typography, Grid, Box, LinearProgress } from '@mui/material';
-import { green, red, blue } from '@mui/material/colors';
+import { Box } from '@mui/material';
 import axios from 'axios';
 import { AuthContext } from '../../../AuthContext';
 import { useSearchParams } from 'react-router-dom';
 import trilha from '../../../sound/trilha.mp3';
 import acerto from '../../../sound/acerto.mp3';
 import erro from '../../../sound/erro.mp3';
-import ConfettiExplosion from 'react-confetti-explosion';
 import AudioManager from '../../../utils/audioManager';
 import { styles } from '../../../utils/styles';
 import { generateMultiplicationQuestion } from '../../../utils/mathGameUtils';
+import GameHeader from '../../../components/GameHeader';
+import GameOver from '../../../components/GameOver';
+import QuestionCard from '../../../components/QuestionCard';
+import GameProgress from '../../../components/GameProgress';
+import ScoreBoard from '../../../components/ScoreBoard';
 
 const MultMathGame = () => {
   const [currentQuestion, setCurrentQuestion] = useState(generateMultiplicationQuestion());
@@ -83,7 +86,6 @@ const MultMathGame = () => {
         setCurrentQuestion(generateMultiplicationQuestion());
         setQuestionCount(questionCount + 1); // Incrementa o número de questões
       }, 1000);
-        
     } else {
       setGameOver(true);
     }
@@ -132,90 +134,43 @@ const MultMathGame = () => {
 
   return (
     <Box sx={styles.container}>
-      <Typography variant="h3" sx={styles.title}>
-          Jogo de Matemática 🎓
-      </Typography>
-      {!gameStarted ? (
-        <Button
-          variant="contained"
-          onClick={startGame}
-          sx={styles.startButton}
-        >
-          Iniciar Jogo
-        </Button>
-      ) : gameOver ? (
-          <Box sx={styles.container}>
-            <Typography variant="h5" sx={styles.gameOverTitle}>
-              Fim do Jogo!
-            </Typography>
-            <Typography variant="h6" sx={{fontFamily: 'Irish Grover'}}>
-              Tempo decorrido: {elapsedTime}s
-            </Typography>
-            <Typography variant="h6" sx={{ color: green[600], fontFamily: 'Irish Grover' }}>
-              Pontuação Final: {score}
-            </Typography>
-            <Typography variant="h6" sx={{ color: red[700], fontFamily: 'Irish Grover' }}>
-              Erros: {errors}
-            </Typography>
-            <Typography variant="h5" sx={{fontFamily: 'Irish Grover', color: blue[700]}} >
-              {feedback}
-            </Typography>
-              <Button
-                variant="contained"
-                onClick={restartGame}
-                sx={styles.restartButton}
-              >
-                Jogar Novamente
-              </Button>
-          </Box>
-      ) : (
-        <>
-          <Card sx={styles.gameCard}>
-            <CardContent>
-              <Typography variant="h5" sx={styles.question}>
-                {currentQuestion.question}
-              </Typography>
-              <Grid container spacing={2}>
-                {currentQuestion.answers.map((answer, index) => (
-                  <Grid item xs={4} key={index}>
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      onClick={() => handleAnswer(answer)}
-                      sx={styles.answerButton(selectedAnswer, answer, currentQuestion.correctAnswer)}
-                    >
-                      {answer}
-                    </Button>
-                  </Grid>
-                ))}
-              </Grid>
-            </CardContent>
-          </Card>
-          <Typography
-            variant="h6"
-            sx={{ mt: 2, color: green[600], fontStyle: 'italic' }}
-          >
-            {message}
-          </Typography>
-          <LinearProgress
-            variant="determinate"
-            value={(questionCount / 15) * 100}
-            sx={styles.progressBar}
-          />
-          {showConfetti && <ConfettiExplosion />}
+      <GameHeader 
+        gameStarted={gameStarted} 
+        onStartGame={startGame}
+      />
 
-          <Box sx={styles.scoreBoard}>
-            <Typography variant="h6" sx={styles.score}>
-              Pontuação: {score}
-            </Typography>
-            <Typography variant="h6" sx={styles.errors}>
-              Erros: {errors}
-            </Typography>
-            <Typography variant="h6" sx={styles.questionCounter}>
-              Pergunta {questionCount} de 15
-            </Typography>
-          </Box>
-        </>
+      {gameStarted && (
+        gameOver ? (
+          <GameOver 
+            score={score}
+            errors={errors}
+            elapsedTime={elapsedTime}
+            feedback={feedback}
+            onRestart={restartGame}
+          />
+        ) : (
+          <>
+            <QuestionCard 
+              question={currentQuestion.question}
+              answers={currentQuestion.answers}
+              onAnswerClick={handleAnswer}
+              selectedAnswer={selectedAnswer}
+              correctAnswer={currentQuestion.correctAnswer}
+            />
+            
+            <GameProgress 
+              message={message}
+              questionCount={questionCount}
+              showConfetti={showConfetti}
+            />
+            
+            <ScoreBoard 
+              score={score}
+              errors={errors}
+              questionCount={questionCount}
+            />
+          </>
+        )
       )}
     </Box>
   );

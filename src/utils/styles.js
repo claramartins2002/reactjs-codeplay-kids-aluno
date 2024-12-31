@@ -18,16 +18,19 @@ export const styles = {
     fontFamily: 'Irish Grover'
   },
 
-  startButton: {
+  startButton: (gameType) => ({
     fontSize: '1.2rem',
     fontWeight: 'bold',
     padding: '1%',
     fontFamily: 'Irish Grover',
-    color: '#e4f6f4',
+    color: gameType === 'Que horas são ?' ? '#fef7df' : '#e4f6f4',
     borderRadius: '20px',
-    backgroundColor: '#91ddcf',
-    '&:hover': { color: '#91ddcf', backgroundColor: '#e4f6f4' },
-  },
+    backgroundColor: gameType === 'Que horas são ?' ? '#f8ce45' : '#91ddcf',
+    '&:hover': { 
+      color: gameType === 'Que horas são ?' ? '#f8ce45' : '#91ddcf', 
+      backgroundColor: gameType === 'Que horas são ?' ? '#fef7df' : '#e4f6f4' 
+    },
+  }),
 
   gameCard: {
     minWidth: 800,
@@ -85,7 +88,7 @@ export const styles = {
   scoreBoard: {
     display: 'flex',
     justifyContent: 'space-between',
-    width: '50%',
+    width: '100%',
     mt: 2,
     px: 2
   },
@@ -114,15 +117,15 @@ export const styles = {
     backgroundColor: blue[900],
   },
 
-  gameOverContainer: {
+  gameOverContainer: (gameType) => ({
     padding: '20px 15px',
     borderRadius: '15px',
     textAlign: 'center',
     fontFamily: 'Irish Grover',
     backgroundColor: '#FFF',
-    border: '1rem solid #91ddcf',
+    border: `1rem solid ${gameType === 'relogio' ? '#f8ce45' : '#91ddcf'}`,
     boxShadow: 'rgba(17, 12, 46, 0.15) 0px 48px 100px 0px',
-  },
+  }),
 
   gameOverTitle: {
     mb: 2,
@@ -131,15 +134,26 @@ export const styles = {
     fontFamily: 'Irish Grover'
   },
 
-  restartButton: {
+  gameOverResults: (gameType) => ({
+    padding: '10px',
+    background: gameType === 'relogio' ? '#fef7df' : '#e4f6f4',
+    borderRadius: '15px',
+    width: '40%',
+    margin: 'auto',
+  }),
+
+  restartButton: (gameType) => ({
     mt: 3,
     margin: '5px',
     padding: '20px 20px',
     borderRadius: '50%',
-    backgroundColor: '#91ddcf',
-    '&:hover': { color: '#91ddcf', backgroundColor: '#e4f6f4' },
+    backgroundColor: gameType === 'relogio' ? '#f8ce45' : '#91ddcf',
+    '&:hover': { 
+      color: gameType === 'relogio' ? '#f8ce45' : '#91ddcf', 
+      backgroundColor: gameType === 'relogio' ? '#fef7df' : '#e4f6f4' 
+    },
     fontSize: '1rem',
     color: 'white',
     fontFamily: 'Irish Grover'
-  }
+  })
 }; 

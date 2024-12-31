@@ -7,7 +7,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
-const GameOver = ({ score, errors, elapsedTime, feedback, onRestart }) => {
+const GameOver = ({ score, errors, elapsedTime, feedback, onRestart, gameType }) => {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
@@ -15,9 +15,9 @@ const GameOver = ({ score, errors, elapsedTime, feedback, onRestart }) => {
   };
 
   return (
-    <Box sx={styles.gameOverContainer}>
+    <Box sx={styles.gameOverContainer(gameType)}>
       <div className="ribbon">Parabéns! Jogo completado!</div>
-      <div className="resultado-final-jogo">
+      <Box sx={styles.gameOverResults(gameType)}>
         <Typography variant="h5" sx={{fontFamily: 'Irish Grover'}}>
             Tempo: {elapsedTime}s
         </Typography>
@@ -30,18 +30,18 @@ const GameOver = ({ score, errors, elapsedTime, feedback, onRestart }) => {
         <Typography variant="h5" sx={{fontFamily: 'Irish Grover', color: blue[700]}} >
             {feedback}
         </Typography>
-      </div>
+      </Box>
       <Button
         variant="contained"
         onClick={handleHomeClick}
-        sx={styles.restartButton}
+        sx={styles.restartButton(gameType)}
       >
         <HomeOutlinedIcon sx={{ fontSize: 40 }}/>
       </Button>
       <Button
         variant="contained"
         onClick={onRestart}
-        sx={styles.restartButton}
+        sx={styles.restartButton(gameType)}
       >
         <RestartAltIcon sx={{ fontSize: 40 }}/>
       </Button>

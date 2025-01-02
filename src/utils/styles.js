@@ -23,12 +23,28 @@ export const styles = {
     fontWeight: 'bold',
     padding: '1%',
     fontFamily: 'Irish Grover',
-    color: gameType === 'Que horas são ?' ? '#fef7df' : '#e4f6f4',
+    color: 
+        gameType === 'Caça Palavras' ? '#e0f9ec'
+        : gameType === 'Que horas são ?' ? '#fef7df' 
+        : gameType === 'memory' ? '#e8ebfe'
+        : '#e4f6f4',
     borderRadius: '20px',
-    backgroundColor: gameType === 'Que horas são ?' ? '#f8ce45' : '#91ddcf',
+    backgroundColor: 
+        gameType === 'Caça Palavras' ? '#00da91'
+        : gameType === 'Que horas são ?' ? '#f8ce45'
+        : gameType === 'memory' ? '#456ff8'
+        : '#91ddcf',
     '&:hover': { 
-      color: gameType === 'Que horas são ?' ? '#f8ce45' : '#91ddcf', 
-      backgroundColor: gameType === 'Que horas são ?' ? '#fef7df' : '#e4f6f4' 
+      color: 
+        gameType === 'Caça Palavras' ? '#00da91'
+        : gameType === 'Que horas são ?' ? '#f8ce45'
+        : gameType === 'memory' ? '#456ff8'
+        : '#91ddcf',
+      backgroundColor: 
+        gameType === 'Caça Palavras' ? '#e0f9ec'
+        : gameType === 'Que horas são ?' ? '#fef7df'
+        : gameType === 'memory' ? '#e8ebfe'
+        : '#e4f6f4'
     },
   }),
 
@@ -123,7 +139,11 @@ export const styles = {
     textAlign: 'center',
     fontFamily: 'Irish Grover',
     backgroundColor: '#FFF',
-    border: `1rem solid ${gameType === 'relogio' ? '#f8ce45' : '#91ddcf'}`,
+    border: `1rem solid ${
+      gameType === 'relogio' ? '#f8ce45'
+        : gameType === 'memory' ? '#456ff8'
+        : '#91ddcf'
+    }`,
     boxShadow: 'rgba(17, 12, 46, 0.15) 0px 48px 100px 0px',
   }),
 
@@ -136,7 +156,9 @@ export const styles = {
 
   gameOverResults: (gameType) => ({
     padding: '10px',
-    background: gameType === 'relogio' ? '#fef7df' : '#e4f6f4',
+    background: gameType === 'relogio' ? '#fef7df'
+      : gameType === 'memory' ? '#e8ebfe'
+      : '#e4f6f4',
     borderRadius: '15px',
     width: '40%',
     margin: 'auto',
@@ -147,10 +169,16 @@ export const styles = {
     margin: '5px',
     padding: '20px 20px',
     borderRadius: '50%',
-    backgroundColor: gameType === 'relogio' ? '#f8ce45' : '#91ddcf',
+    backgroundColor: gameType === 'relogio' ? '#f8ce45'
+      : gameType === 'memory' ? '#456ff8'
+      : '#91ddcf',
     '&:hover': { 
-      color: gameType === 'relogio' ? '#f8ce45' : '#91ddcf', 
-      backgroundColor: gameType === 'relogio' ? '#fef7df' : '#e4f6f4' 
+      color: gameType === 'relogio' ? '#f8ce45'
+        : gameType === 'memory' ? '#456ff8'
+        : '#91ddcf',
+      backgroundColor: gameType === 'relogio' ? '#fef7df'
+        : gameType === 'memory' ? '#e8ebfe'
+        : '#e4f6f4'
     },
     fontSize: '1rem',
     color: 'white',

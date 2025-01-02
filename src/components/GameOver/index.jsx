@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, Tooltip } from '@mui/material';
 import { green, red, blue } from '@mui/material/colors';
 import { styles } from '../../utils/styles';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -18,33 +18,43 @@ const GameOver = ({ score, errors, elapsedTime, feedback, onRestart, gameType })
     <Box sx={styles.gameOverContainer(gameType)}>
       <div className="ribbon">Parabéns! Jogo completado!</div>
       <Box sx={styles.gameOverResults(gameType)}>
-        <Typography variant="h5" sx={{fontFamily: 'Irish Grover'}}>
-            Tempo: {elapsedTime}s
-        </Typography>
-        <Typography variant="h5" sx={{ color: green[600], fontFamily: 'Irish Grover' }}>
-            Pontuação: {score}
-        </Typography>
-        <Typography variant="h5" sx={{ color: red[700], fontFamily: 'Irish Grover' }}>
-            Erros: {errors}
-        </Typography>
+        {elapsedTime !== undefined && (
+          <Typography variant="h5" sx={{fontFamily: 'Irish Grover'}}>
+              Tempo: {elapsedTime}s
+          </Typography>
+        )}
+        {score !== undefined && (
+          <Typography variant="h5" sx={{ color: green[600], fontFamily: 'Irish Grover' }}>
+              Pontuação: {score}
+          </Typography>
+        )}
+        {errors !== undefined && (
+          <Typography variant="h5" sx={{ color: red[700], fontFamily: 'Irish Grover' }}>
+              Erros: {errors}
+          </Typography>
+        )}
         <Typography variant="h5" sx={{fontFamily: 'Irish Grover', color: blue[700]}} >
             {feedback}
         </Typography>
       </Box>
-      <Button
-        variant="contained"
-        onClick={handleHomeClick}
-        sx={styles.restartButton(gameType)}
-      >
-        <HomeOutlinedIcon sx={{ fontSize: 40 }}/>
-      </Button>
-      <Button
-        variant="contained"
-        onClick={onRestart}
-        sx={styles.restartButton(gameType)}
-      >
-        <RestartAltIcon sx={{ fontSize: 40 }}/>
-      </Button>
+      <Tooltip title="Voltar ao início">
+        <Button
+          variant="contained"
+          onClick={handleHomeClick}
+          sx={styles.restartButton(gameType)}
+        >
+          <HomeOutlinedIcon sx={{ fontSize: 40 }}/>
+        </Button>
+      </Tooltip>
+      <Tooltip title="Reiniciar">
+        <Button
+          variant="contained"
+          onClick={onRestart}
+          sx={styles.restartButton(gameType)}
+        >
+          <RestartAltIcon sx={{ fontSize: 40 }}/>
+        </Button>
+      </Tooltip>
     </Box>
   );
 };

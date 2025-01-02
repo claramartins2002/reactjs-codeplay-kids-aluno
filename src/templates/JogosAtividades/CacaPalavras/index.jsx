@@ -4,14 +4,26 @@ import { WordPuzzleComponent } from "./components/WordPuzzleComponent/WordPuzzle
 import Timer from "../Timer";
 import { AuthContext } from "../../../AuthContext";
 import { useSearchParams } from "react-router-dom";
+import trilha from '../../../sound/trilha2.mp3';
 import axios from "axios";
 import RelatorioFinal from "./components/RelatorioFinal/RelatorioFinal";
+import AudioManager from "../../../utils/audioManager";
+import GameHeader from "../../../components/GameHeader";
 
 export const CacaPalavras = () => {
   const answerWords = [
     "gato", "macaco", "formiga", "cavalo", "vaca", "pato", "elefante", "girafa", "arara",
   ];
+
+  // Inicialização dos sons
+  const [ambientSound] = useState(new AudioManager(trilha, { loop: true, volume: 0.3 }))
   
+  // Limpeza do áudio quando o componente for desmontado
+  useEffect(() => {
+    return () => {
+      ambientSound.stop();
+    };
+  }, []);
 
   const generateWordPuzzle = (words, rows = 10, columns = 10) => {
     const matrix = Array.from({ length: rows }, () => Array(columns).fill(""));
@@ -67,7 +79,7 @@ export const CacaPalavras = () => {
   const [searchParams] = useSearchParams();
   const activityId = searchParams.get('id'); // Captura o 'id' da atividade
   const [feedback, setFeedback] = useState('');
-  const matrix = generateWordPuzzle(answerWords);
+  const [matrix, setMatrix] = useState(generateWordPuzzle(answerWords));
   const [elapsedTime, setElapsedTime] = useState(0); // Cronômetro
 
 
@@ -102,6 +114,7 @@ export const CacaPalavras = () => {
     setFoundWordsTimes([]);
     setDialogOpen(false);
     setElapsedTime(0);
+    setMatrix(generateWordPuzzle(answerWords))
     startGame();
   };
 
@@ -111,6 +124,7 @@ export const CacaPalavras = () => {
   };
 
   const startGame = () => {
+    ambientSound.play();
     setIsGameActive(true);
     setFound([]);
     setFoundWordsTimes([]);
@@ -154,15 +168,22 @@ export const CacaPalavras = () => {
   return (
     <div className='cacapalavras-game-container'>
       {!isGameActive && (
-        <><button className="start-button" onClick={startGame}>
-          Iniciar Jogo
-        </button>
-        <h3>Atenção! Ao iniciar o jogo, o cronômetro será ativado</h3>
-      </>)}
+        <>
+          {/* <button className="start-button" onClick={startGame}>
+            INICIAR JOGO
+          </button> */}
+          <GameHeader 
+            gameStarted={isGameActive} 
+            onStartGame={startGame}
+            game="Caça Palavras"
+          />
+          {/* <h3>Atenção! Ao iniciar o jogo, o cronômetro será ativado</h3> */}
+        </>
+      )}
       {isGameActive && (
         <Timer isRunning={isGameActive} onComplete={(timeElapsed) => console.log(`Tempo total: ${timeElapsed} segundos`)} />
       )}
-      <div className="answer-words-container">
+      <div className={`answer-words-container ${isGameActive ? "active" : "inactive"}`}>
         {answerWords.map((element) => (
           <span key={element} className="answer-word">
             <h2 className={`answer-text ${isInList(element, found) ? "line-through" : ""}`}>
@@ -176,7 +197,7 @@ export const CacaPalavras = () => {
           design={{
             markedBackgroundColor: "#00C3FF",
             selectedBackgroundColor: "white",
-            hoveredBackgroundColor: "rgb(0, 218, 145)",
+            hoveredBackgroundColor: "#00da91",
             backgroundColor: "rgb(1, 146, 98)",
             fontFamily: "Irish Grover",
             fontSize: "2.5rem",

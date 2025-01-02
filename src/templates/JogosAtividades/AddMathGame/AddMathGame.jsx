@@ -136,6 +136,7 @@ const AddMathGame = () => {
       <GameHeader 
         gameStarted={gameStarted} 
         onStartGame={startGame}
+        game="Adição de Números"
       />
       
       {gameStarted && (

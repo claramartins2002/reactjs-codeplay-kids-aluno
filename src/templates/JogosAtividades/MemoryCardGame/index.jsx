@@ -12,7 +12,7 @@ import useWindowSize from 'react-use/lib/useWindowSize';
 import { AuthContext } from '../../../AuthContext';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
-import { Typography } from '@mui/material';
+import GameOver from '../../../components/GameOver';
 
 const cardImages = [
   { 'src': img1, matched: false },
@@ -153,11 +153,12 @@ const MemoryCardGame = () => {
       </div>
       <center><h3>Tentativas: {turns}</h3></center>
       {gameCompleted && (
-        <div className="game-completed">
-          <h3>Parabéns! Você completou o jogo!</h3>
-          <Typography sx={{fontFamily: 'Irish Grover'}}> {feedback}</Typography>
-          <button className="start-button" onClick={shuffleCards}>Jogar Novamente</button>
-        </div>
+        // <div className="game-completed">
+        //   <h3>Parabéns! Você completou o jogo!</h3>
+        //   <Typography sx={{fontFamily: 'Irish Grover'}}> {feedback}</Typography>
+        //   <button className="start-button" onClick={shuffleCards}>Jogar Novamente</button>
+        // </div>
+        <GameOver gameType='memory' feedback={feedback} onRestart={shuffleCards}/>
       )}
       {gameCompleted && (
         <Confetti 

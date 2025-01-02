@@ -5,7 +5,9 @@
   max-width: 500px;
   margin: 40px auto;
   padding: 20px;
+  border-radius: 20px;
   background: #fff;
+  border: 1rem solid #456ff8;
   font-family: 'Irish Grover';
 }
 .btn-memory-game {

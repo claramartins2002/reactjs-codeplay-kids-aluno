@@ -44,29 +44,35 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10; /* Garantir que o botão esteja sobre o jogo */
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
+  background-color: #00da91;
+  color: #e0f9ec;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
   font-size: 1.2rem;
+  font-weight: bold;
+  padding: 1%;
+  font-family: 'Irish Grover';
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
 .start-button:hover {
-  background-color: #0056b3;
+  background-color: #e0f9ec;
+  color: #00da91;
 }
 
-.word-puzzle-wrapper.inactive {
+.inactive {
   opacity: 0.3; /* Reduz opacidade quando o jogo está desabilitado */
   pointer-events: none; /* Desabilita interação */
   transition: opacity 0.5s ease;
+  visibility: hidden;
 }
 
-.word-puzzle-wrapper.active {
+.active {
   opacity: 1; /* Opacidade normal quando o jogo está ativo */
   pointer-events: auto; /* Ativa interação */
   transition: opacity 0.5s ease;
+  visibility: visible;
 }
 
 .word-puzzle.disabled {

@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Button, Card, CardContent, Typography, Box } from '@mui/material';
-import { green, red, blue } from '@mui/material/colors';
-import ConfettiExplosion from 'react-confetti-explosion';
+import { Button, Card, CardContent, Box } from '@mui/material';
 import './CountingGame.css';
 import { AuthContext } from '../../../AuthContext';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
-import ResultadoFinal from './components/ResultadoFinal/ResultadoFinal';
-import JogoCompletado from './components/JogoCompletado/JogoCompletado';
+import trilha from '../../../sound/trilha3.mp3';
+import acerto from '../../../sound/acerto.mp3';
+import erro from '../../../sound/erro.mp3';
+import AudioManager from '../../../utils/audioManager';
+import { styles } from './styles';
+import GameHeader from '../../../components/GameHeader';
+import GameOver from '../../../components/GameOver';
+import GameProgress from '../../../components/GameProgress';
+import ScoreBoard from '../../../components/ScoreBoard';
 
 const getRandomCount = () => Math.floor(Math.random() * 5) + 1;
 
@@ -18,15 +23,15 @@ const FRUIT_TYPES = [
 ];
 
 const generateFruits = (level) => {
-    const fruits = [];
-    for (let i = 0; i < level + 2; i++) {
-        const count = getRandomCount();
-        const fruitType = FRUIT_TYPES[i % FRUIT_TYPES.length];
-        for (let j = 0; j < count; j++) {
-            fruits.push(fruitType);
-        }
+  const fruits = [];
+  for (let i = 0; i < level + 2; i++) {
+    const count = getRandomCount();
+    const fruitType = FRUIT_TYPES[i % FRUIT_TYPES.length];
+    for (let j = 0; j < count; j++) {
+      fruits.push(fruitType);
     }
-    return fruits;
+  }
+  return fruits;
 };
 
 const CountingGame = () => {
@@ -43,8 +48,23 @@ const CountingGame = () => {
   const [searchParams] = useSearchParams();
   const activityId = searchParams.get('id'); // Captura o 'id' da atividade
   const [gameOver, setGameOver] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
   const [questionCount, setQuestionCount] = useState(1);
   const [feedback, setFeedback] = useState('');
+
+  // Inicialização dos sons
+  const [ambientSound] = useState(new AudioManager(trilha, { loop: true, volume: 0.3 }));
+  const [correctSound] = useState(new AudioManager(acerto, { allowMultiplePlays: true }));
+  const [wrongSound] = useState(new AudioManager(erro, { allowMultiplePlays: true }));
+
+  // Limpeza do áudio
+    useEffect(() => {
+      return () => {
+        ambientSound.stop();
+        correctSound.stop();
+        wrongSound.stop();
+      };
+    }, []);
 
   const countFruitsByType = () => {
     return FRUIT_TYPES.map((fruit) => ({
@@ -61,12 +81,17 @@ const CountingGame = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      if (!gameOver) {
+      if (gameStarted && !gameOver) {
         setElapsedTime((prevTime) => prevTime + 1);
       }
     }, 1000);
     return () => clearInterval(timer);
-  }, [gameOver]);
+  }, [gameStarted, gameOver]);
+
+  const startGame = () => {
+    setGameStarted(true);
+    ambientSound.play();
+  };
 
   const handleInputChange = (fruitName, value) => {
     setUserAnswers({ ...userAnswers, [fruitName]: value });
@@ -82,16 +107,18 @@ const CountingGame = () => {
     });
 
     if (isCorrect) {
+      correctSound.play();
       setScore(score + 1);
       setMessage('Acertou! 🎉');
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 2000);
     } else {
+      wrongSound.play();
       setErrors(errors + 1);
       setMessage('Errou! 😞');
     }
 
-    if (questionCount < 5) {
+    if (questionCount < 7) {
       setTimeout(() => {
         setMessage('');
         setFruits(generateFruits(level + 1));
@@ -104,10 +131,21 @@ const CountingGame = () => {
     }
   };
 
+  const restartGame = () => {
+    setScore(0);
+    setErrors(0);
+    setQuestionCount(1);
+    setGameOver(false);
+    setMessage('');
+    setElapsedTime(0);
+    setUserAnswers({ Apple: '', Banana: '', Pear: '' })
+    setFruits(generateFruits(0));
+  };
+
   const saveGameReport = async () => {
     const relatorio = {
       aluno: { id: studentId },
-      tipoAtividade: 'Operações Matemáticas',
+      tipoAtividade: 'Quantas frutas têm ?',
       pontuacao: score,
       erros: errors,
       acertos: score,
@@ -133,41 +171,26 @@ const CountingGame = () => {
   }, [gameOver]);
 
   return (
-    <Box
-      sx={{
-        minHeight: '85vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        padding: 3,
-      }}
-    >
-      <Typography variant="h4" sx={{ mb: 2, color: '#3c9fff', fontWeight: 'bold', fontFamily: 'Gorditas', }}>
-        Quantas frutas têm ?
-      </Typography>
-          {gameOver ? (
-            <ResultadoFinal score={score} feedback={feedback} errors={errors} elapsedTime={elapsedTime}/>
+    <Box sx={styles.box} >
+      <GameHeader 
+        gameStarted={gameStarted} 
+        onStartGame={startGame}
+        game="Quantas frutas têm ?"
+      />
+        {gameStarted && (
+          gameOver ? (
+            <GameOver 
+            score={score}
+            errors={errors}
+            elapsedTime={elapsedTime}
+            feedback={feedback}
+            onRestart={restartGame}
+            gameType='Quantas frutas têm ?'
+          />
           ) : (
-            <Card
-              sx={{
-                maxWidth: '40%',
-                maxHeight: '50%',
-                backgroundColor: '#e3f1ff',
-                boxShadow: '0 0 10px rgba(0,0,0,0.2)',
-                borderRadius: 3,
-              }}
-            >
-              <CardContent sx={{ display: 'flex', flexDirection: 'row-reverse', padding: '0 !important' }}>
-                <Box
-                  sx={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexWrap: 'wrap',
-                    margin: '10px',
-                    fontFamily: 'Irish Grover'
-                  }}
-                >
+            <Card sx={styles.card} >
+              <CardContent sx={{ display: 'flex', flexDirection: 'row-reverse', padding: '0 !important', justifyContent: 'space-between' }}>
+                <Box sx={styles.fruitsBox}>
                   {fruits.map((fruit, index) => (
                       <span key={index}>{fruit.icon}</span>
                   ))}
@@ -188,31 +211,31 @@ const CountingGame = () => {
                     <Button
                       variant="contained"
                       onClick={checkAnswers}
-                      sx={{
-                        background: '#4CAF50',
-                        boxShadow: '0 5px #2e7d32',
-                        transition: 'transform 0.3s, box-shadow 0.3s',
-                        color: 'white',
-                        width: '75%',
-                        fontFamily: 'Gorditas',
-                        mt: 2,
-                        '&:hover': { background: '#4CAF50', boxShadow: '0 5px #2e7d32' },
-                        '&:active': { transform: 'translateY(6px)', boxShadow: '0' }
-                      }}
+                      sx={styles.button}
                     >
                       Responder
                     </Button>
                   </div>
+
+                  <div className="score-board-container">
+                    <GameProgress 
+                      message={message}
+                      questionCount={questionCount}
+                      showConfetti={showConfetti}
+                      totalQuestions={7}
+                    />
+                    
+                    <ScoreBoard 
+                      score={score}
+                      errors={errors}
+                      questionCount={questionCount}
+                      totalQuestions={7}
+                    />
+                  </div>
                 </CardContent>
             </Card>
-          )}
-        { !gameOver ? (
-          <JogoCompletado score={score} message={message} errors={errors} />
-        ) : (
-          <>
-          </>
+          )
         )}
-        {showConfetti && <ConfettiExplosion />}
     </Box>
   );
 };

@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import { AuthContext } from '../../../AuthContext';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
-import trilha from '../../../sound/trilha.mp3';
+import trilha from '../../../sound/trilha3.mp3';
 import acerto from '../../../sound/acerto.mp3';
 import erro from '../../../sound/erro.mp3';
 import AudioManager from '../../../utils/audioManager';

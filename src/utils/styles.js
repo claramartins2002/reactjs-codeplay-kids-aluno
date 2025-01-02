@@ -23,25 +23,29 @@ export const styles = {
     fontWeight: 'bold',
     padding: '1%',
     fontFamily: 'Irish Grover',
-    color: 
-        gameType === 'Caça Palavras' ? '#e0f9ec'
+    borderRadius: '20px',
+    color:
+        gameType === 'Quantas frutas têm ?' ? '#e4f3ff'
+        : gameType === 'Caça Palavras' ? '#e0f9ec'
         : gameType === 'Que horas são ?' ? '#fef7df' 
         : gameType === 'memory' ? '#e8ebfe'
         : '#e4f6f4',
-    borderRadius: '20px',
-    backgroundColor: 
-        gameType === 'Caça Palavras' ? '#00da91'
+    backgroundColor:
+        gameType === 'Quantas frutas têm ?' ? '#3c9fff'
+        : gameType === 'Caça Palavras' ? '#00da91'
         : gameType === 'Que horas são ?' ? '#f8ce45'
         : gameType === 'memory' ? '#456ff8'
         : '#91ddcf',
     '&:hover': { 
-      color: 
-        gameType === 'Caça Palavras' ? '#00da91'
+      color:
+        gameType === 'Quantas frutas têm ?' ? '#3c9fff'
+        : gameType === 'Caça Palavras' ? '#00da91'
         : gameType === 'Que horas são ?' ? '#f8ce45'
         : gameType === 'memory' ? '#456ff8'
         : '#91ddcf',
-      backgroundColor: 
-        gameType === 'Caça Palavras' ? '#e0f9ec'
+      backgroundColor:
+        gameType === 'Quantas frutas têm ?' ? '#e4f3ff'
+        : gameType === 'Caça Palavras' ? '#e0f9ec'
         : gameType === 'Que horas são ?' ? '#fef7df'
         : gameType === 'memory' ? '#e8ebfe'
         : '#e4f6f4'
@@ -140,7 +144,9 @@ export const styles = {
     fontFamily: 'Irish Grover',
     backgroundColor: '#FFF',
     border: `1rem solid ${
-      gameType === 'relogio' ? '#f8ce45'
+      gameType === 'Quantas frutas têm ?' ? '#3c9fff'
+        : gameType === 'Caça Palavras' ? '#00da91'
+        : gameType === 'Que horas são ?' ? '#f8ce45'
         : gameType === 'memory' ? '#456ff8'
         : '#91ddcf'
     }`,
@@ -156,12 +162,15 @@ export const styles = {
 
   gameOverResults: (gameType) => ({
     padding: '10px',
-    background: gameType === 'relogio' ? '#fef7df'
-      : gameType === 'memory' ? '#e8ebfe'
-      : '#e4f6f4',
     borderRadius: '15px',
     width: '40%',
     margin: 'auto',
+    background: 
+      gameType === 'Quantas frutas têm ?' ? '#e4f3ff'
+      : gameType === 'Caça Palavras' ? '#e0f9ec'
+      : gameType === 'Que horas são ?' ? '#fef7df' 
+      : gameType === 'memory' ? '#e8ebfe'
+      : '#e4f6f4',
   }),
 
   restartButton: (gameType) => ({
@@ -169,19 +178,28 @@ export const styles = {
     margin: '5px',
     padding: '20px 20px',
     borderRadius: '50%',
-    backgroundColor: gameType === 'relogio' ? '#f8ce45'
+    fontSize: '1rem',
+    color: 'white',
+    fontFamily: 'Irish Grover',
+    backgroundColor: 
+      gameType === 'Quantas frutas têm ?' ? '#3c9fff'
+      : gameType === 'Caça Palavras' ? '#00da91'
+      : gameType === 'Que horas são ?' ? '#f8ce45'
       : gameType === 'memory' ? '#456ff8'
       : '#91ddcf',
     '&:hover': { 
-      color: gameType === 'relogio' ? '#f8ce45'
+      color: 
+        gameType === 'Quantas frutas têm ?' ? '#3c9fff'
+        : gameType === 'Caça Palavras' ? '#00da91'
+        : gameType === 'Que horas são ?' ? '#f8ce45'
         : gameType === 'memory' ? '#456ff8'
         : '#91ddcf',
-      backgroundColor: gameType === 'relogio' ? '#fef7df'
+      backgroundColor: 
+        gameType === 'Quantas frutas têm ?' ? '#e4f3ff'
+        : gameType === 'Caça Palavras' ? '#e0f9ec'
+        : gameType === 'Que horas são ?' ? '#fef7df' 
         : gameType === 'memory' ? '#e8ebfe'
-        : '#e4f6f4'
+        : '#e4f6f4',
     },
-    fontSize: '1rem',
-    color: 'white',
-    fontFamily: 'Irish Grover'
   })
 }; 

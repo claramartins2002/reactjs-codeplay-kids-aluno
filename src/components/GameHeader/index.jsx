@@ -5,7 +5,7 @@ import { styles } from '../../utils/styles';
 const GameHeader = ({ gameStarted, onStartGame, game }) => {
   return (
     <>
-      <Typography variant="h3" sx={styles.title}>
+      <Typography variant="h3" sx={styles.title(game)}>
         {game}
       </Typography>
       {!gameStarted && (

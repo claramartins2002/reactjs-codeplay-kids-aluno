@@ -177,9 +177,9 @@ const CountingGame = () => {
         onStartGame={startGame}
         game="Quantas frutas têm ?"
       />
-        {gameStarted && (
-          gameOver ? (
-            <GameOver 
+      {gameStarted && (
+        gameOver ? (
+          <GameOver 
             score={score}
             errors={errors}
             elapsedTime={elapsedTime}
@@ -187,55 +187,55 @@ const CountingGame = () => {
             onRestart={restartGame}
             gameType='Quantas frutas têm ?'
           />
-          ) : (
-            <Card sx={styles.card} >
-              <CardContent sx={{ display: 'flex', flexDirection: 'row-reverse', padding: '0 !important', justifyContent: 'space-between' }}>
-                <Box sx={styles.fruitsBox}>
-                  {fruits.map((fruit, index) => (
-                      <span key={index}>{fruit.icon}</span>
+        ) : (
+          <Card sx={styles.card} >
+            <CardContent sx={{ display: 'flex', flexDirection: 'row-reverse', padding: '0 !important', justifyContent: 'space-between' }}>
+              <Box sx={styles.fruitsBox}>
+                {fruits.map((fruit, index) => (
+                    <span key={index}>{fruit.icon}</span>
+                ))}
+              </Box>
+                <div className="fruits-container">
+                  {FRUIT_TYPES.map((fruit) => (
+                    <Box key={fruit.name} sx={{ margin: '0.5rem', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                      <span>{fruit.icon}</span>
+                      <span className="separator-answer">=</span>
+                      <input
+                        type="number"
+                        className="input-answer-fruits"
+                        value={userAnswers[fruit.name]}
+                        onChange={(e) => handleInputChange(fruit.name, e.target.value)}
+                      />
+                    </Box>
                   ))}
-                </Box>
-                  <div className="fruits-container">
-                    {FRUIT_TYPES.map((fruit) => (
-                      <Box key={fruit.name} sx={{ margin: '0.5rem', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                        <span>{fruit.icon}</span>
-                        <span className="separator-answer">=</span>
-                        <input
-                          type="number"
-                          className="input-answer-fruits"
-                          value={userAnswers[fruit.name]}
-                          onChange={(e) => handleInputChange(fruit.name, e.target.value)}
-                        />
-                      </Box>
-                    ))}
-                    <Button
-                      variant="contained"
-                      onClick={checkAnswers}
-                      sx={styles.button}
-                    >
-                      Responder
-                    </Button>
-                  </div>
+                  <Button
+                    variant="contained"
+                    onClick={checkAnswers}
+                    sx={styles.button}
+                  >
+                    Responder
+                  </Button>
+                </div>
 
-                  <div className="score-board-container">
-                    <GameProgress 
-                      message={message}
-                      questionCount={questionCount}
-                      showConfetti={showConfetti}
-                      totalQuestions={7}
-                    />
-                    
-                    <ScoreBoard 
-                      score={score}
-                      errors={errors}
-                      questionCount={questionCount}
-                      totalQuestions={7}
-                    />
-                  </div>
-                </CardContent>
-            </Card>
-          )
-        )}
+                <div className="score-board-container">
+                  <GameProgress 
+                    message={message}
+                    questionCount={questionCount}
+                    showConfetti={showConfetti}
+                    totalQuestions={7}
+                  />
+                  
+                  <ScoreBoard 
+                    score={score}
+                    errors={errors}
+                    questionCount={questionCount}
+                    totalQuestions={7}
+                  />
+                </div>
+              </CardContent>
+          </Card>
+        )
+      )}
     </Box>
   );
 };

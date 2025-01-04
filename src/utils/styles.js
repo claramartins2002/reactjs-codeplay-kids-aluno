@@ -1,4 +1,4 @@
-import { blue } from '@mui/material/colors';
+import { blue, red, grey, green } from '@mui/material/colors';
 
 // Configuração de cores para cada tipo de jogo
 const gameColors = {
@@ -36,6 +36,20 @@ const gameColors = {
     hoverText: '#A5D6A7',
     hoverBackground: '#FFF',
     border: '#A5D6A7',
+  },
+  'Arrasta e Solta': {
+    text: '#eee5f6',
+    background: '#6c27b8',
+    hoverText: '#6c27b8',
+    hoverBackground: '#eee5f6',
+    border: '#6c27b8'
+  },
+  'Que animal é esse ?': {
+    text: '#F2E8B3',
+    background: '#6fa3df',
+    hoverText: '#6fa3df',
+    hoverBackground: '#F2E8B3',
+    border: '#6fa3df'
   },
   default: {
     text: '#e4f6f4',
@@ -81,6 +95,23 @@ export const styles = {
     };
   },
 
+  gameCard: {
+    minWidth: 800,
+    backgroundColor: '#91ddcf',
+    boxShadow: '0 0 10px rgba(0,0,0,0.2)',
+    borderRadius: 3,
+    fontFamily: 'Irish Grover'
+  },
+
+  question: {
+    mb: 3,
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontFamily: 'Irish Grover',
+    fontSize: '5rem'
+  },
+
   gameOverContainer: (gameType) => {
     const colors = gameColors[gameType] || gameColors.default;
     return {
@@ -91,8 +122,47 @@ export const styles = {
       backgroundColor: '#FFF',
       border: `1rem solid ${colors.border}`,
       boxShadow: 'rgba(17, 12, 46, 0.15) 0px 48px 100px 0px',
+      maxWidth: '50%',
+      margin: '10% auto',
     };
   },
+
+  gameOverResults: (gameType) => {
+    const colors = gameColors[gameType] || gameColors.default;
+    return {
+      padding: '10px',
+      borderRadius: '15px',
+      width: '40%',
+      margin: 'auto',
+      background: colors.hoverBackground
+    };
+  },
+
+  answerButton: (selectedAnswer, answer, correctAnswer) => ({
+    fontSize: '4rem',
+    backgroundColor:
+      selectedAnswer === null
+        ? grey[400]
+        : answer === correctAnswer
+        ? green[400]
+        : selectedAnswer === answer
+        ? red[400]
+        : grey[400],
+    '&:hover': {
+      backgroundColor:
+        selectedAnswer === null
+          ? grey[600]
+          : answer === correctAnswer
+          ? green[600]
+          : selectedAnswer === answer
+          ? red[600]
+          : grey[600]
+    },
+    fontWeight: 'bold',
+    color: 'white',
+    boxShadow: '0 0 5px rgba(0,0,0,0.2)',
+    fontFamily: 'Irish Grover'
+  }),
 
   restartButton: (gameType) => {
     const colors = gameColors[gameType] || gameColors.default;
@@ -110,5 +180,47 @@ export const styles = {
         backgroundColor: colors.hoverBackground,
       },
     };
+  },
+
+  progressBar: {
+    mt: 2,
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: grey[300],
+    '& .MuiLinearProgress-bar': {
+      backgroundColor: blue[500]
+    }
+  },
+
+  scoreBoard: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    mt: 2,
+    px: 2
+  },
+
+  score: {
+    color: '#FFF',
+    fontFamily: 'Irish Grover',
+    padding: '10px 15px',
+    backgroundColor: '#3bbf54',
+    borderRadius: '25px'
+  },
+
+  errors: {
+    color: '#FFF',
+    fontFamily: 'Irish Grover',
+    padding: '10px 15px',
+    backgroundColor: red[600],
+    borderRadius: '25px'
+  },
+
+  questionCounter: {
+    color: '#FFF',
+    fontFamily: 'Irish Grover',
+    padding: '10px 15px',
+    borderRadius: '25px',
+    backgroundColor: blue[900],
   },
 };

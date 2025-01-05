@@ -2,13 +2,22 @@
   font-family: 'Irish Grover';
 }
 .memory-game {
-  max-width: 500px;
+  width: 40%;
+  max-width: 60%;
   margin: 40px auto;
   padding: 20px;
   border-radius: 20px;
   background: #fff;
   border: 1rem solid #456ff8;
   font-family: 'Irish Grover';
+}
+.container-memory-game {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 3%;
 }
 .btn-memory-game {
   background: none;

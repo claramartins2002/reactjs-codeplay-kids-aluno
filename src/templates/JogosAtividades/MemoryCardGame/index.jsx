@@ -6,6 +6,9 @@ import img3 from './images/img-3.png';
 import img4 from './images/img-4.png';
 import img5 from './images/img-5.png';
 import img6 from './images/img-6.png';
+import trilha from '../../../sound/trilha.mp3';
+import acerto from '../../../sound/acerto.mp3';
+import AudioManager from '../../../utils/audioManager';
 import SingleCard from './components/SingleCard';
 import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
@@ -13,6 +16,7 @@ import { AuthContext } from '../../../AuthContext';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import GameOver from '../../../components/GameOver';
+import GameHeader from '../../../components/GameHeader';
 
 const cardImages = [
   { 'src': img1, matched: false },
@@ -30,6 +34,7 @@ const MemoryCardGame = () => {
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [gameCompleted, setGameCompleted] = useState(false); // Controle do final do jogo
+  const [gameStarted, setGameStarted] = useState(false);
   const { width, height } = useWindowSize();
   const { studentId } = useContext(AuthContext);
   const [searchParams] = useSearchParams();
@@ -37,34 +42,39 @@ const MemoryCardGame = () => {
   const activityId = searchParams.get('id'); // Captura o 'id' da atividade
   const API_URL = 'http://localhost:8080/relatorio'; // Atualize com a URL do seu backend
   const [feedback, setFeedback] = useState('');
+  const [showGameOver, setShowGameOver] = useState(false);
 
-    // Controle do cronômetro
-    useEffect(() => {
-      const timer = setInterval(() => {
-          if (!gameCompleted) {
-              setTimeElapsed((prevTime) => prevTime + 1);
-          }
-      }, 1000);
-      return () => clearInterval(timer);
+  // Inicialização dos sons
+  const [ambientSound] = useState(new AudioManager(trilha, { loop: true, volume: 0.3 }));
+  const [correctSound] = useState(new AudioManager(acerto, { allowMultiplePlays: true }));
+
+  // Controle do cronômetro
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!gameCompleted) {
+        setTimeElapsed((prevTime) => prevTime + 1);
+      }
+    }, 1000);
+    return () => clearInterval(timer);
   }, [gameCompleted]);
 
-   // Função para enviar os dados para o backend
-   const saveGameReport = async () => {
+  // Função para enviar os dados para o backend
+  const saveGameReport = async () => {
     const relatorio = {
-        aluno: {id: studentId}, // ID do aluno
-        tipoAtividade: 'Jogo da Memória', // Tipo da atividade
-        tentativas: turns,
-        tempoGasto: timeElapsed,
-        atividade: { id: activityId}
+      aluno: {id: studentId}, // ID do aluno
+      tipoAtividade: 'Jogo da Memória', // Tipo da atividade
+      tentativas: turns,
+      tempoGasto: timeElapsed,
+      atividade: { id: activityId}
     };
     try {
-        const response = await axios.post(API_URL, relatorio);
-        console.log('Relatório salvo com sucesso:', response.data);
-        setFeedback(response.data);
+      const response = await axios.post(API_URL, relatorio);
+      console.log('Relatório salvo com sucesso:', response.data);
+      setFeedback(response.data);
     } catch (error) {
-        console.error('Erro ao salvar o relatório:', error);
+      console.error('Erro ao salvar o relatório:', error);
     }
-};
+  };
 
 
   // Shuffle cards
@@ -78,6 +88,7 @@ const MemoryCardGame = () => {
     setCards(shuffleCards);
     setTurns(0);
     setGameCompleted(false); // Reinicia o estado do jogo concluído
+    setShowGameOver(false); // Reinicia o estado de exibição do GameOver
   };
 
   // Handle a choice
@@ -91,6 +102,7 @@ const MemoryCardGame = () => {
       setDisabled(true);
 
       if (choiceOne.src === choiceTwo.src) {
+        correctSound.play();
         setCards((prevCards) => {
           return prevCards.map((card) => {
             if (card.src === choiceOne.src) {
@@ -115,12 +127,16 @@ const MemoryCardGame = () => {
     }
   }, [cards]);
 
-      // Salvar o relatório quando o jogo terminar
-      useEffect(() => {
-        if (gameCompleted) {
-            saveGameReport();
-        }
-    }, [gameCompleted]);
+  // Salvar o relatório quando o jogo terminar
+  useEffect(() => {
+    if (gameCompleted) {
+      saveGameReport(); // Salva o relatório
+      const timer = setTimeout(() => {
+        setShowGameOver(true); // Exibe o GameOver após 1 segundo
+      }, 1000);
+      return () => clearTimeout(timer); // Limpa o timer ao desmontar
+    }
+  }, [gameCompleted]);
 
   // Reset choices & increase turn
   const resetTurn = () => {
@@ -130,46 +146,56 @@ const MemoryCardGame = () => {
     setDisabled(false);
   };
 
+  const startGame = () => {
+    setGameStarted(true);
+    ambientSound.play();
+  };
+
   // Start a new game automatically on load
   useEffect(() => {
     shuffleCards();
   }, []);
 
   return (
-    <div className="memory-game">
-      <div className="header">
-        <h1>Jogo da Memória</h1>
-      </div>
-      <div className="card-grid">
-        {cards.map((card) => (
-          <SingleCard
-            key={card.id}
-            card={card}
-            handleChoice={handleChoice}
-            flipped={card === choiceOne || card === choiceTwo || card.matched}
-            disabled={disabled}
-          />
-        ))}
-      </div>
-      <center><h3>Tentativas: {turns}</h3></center>
-      {gameCompleted && (
-        // <div className="game-completed">
-        //   <h3>Parabéns! Você completou o jogo!</h3>
-        //   <Typography sx={{fontFamily: 'Irish Grover'}}> {feedback}</Typography>
-        //   <button className="start-button" onClick={shuffleCards}>Jogar Novamente</button>
-        // </div>
-        <GameOver gameType='memory' feedback={feedback} onRestart={shuffleCards}/>
-      )}
-      {gameCompleted && (
-        <Confetti 
-          width={width}
-          height={height}
-          numberOfPieces={800}
-          gravity={0.3}
-          wind={0.01}
-          friction={0.99}
-        />
-      )}
+    <div className="container-memory-game">
+      <GameHeader 
+        gameStarted={gameStarted} 
+        onStartGame={startGame}
+        game="Jogo da memória"
+      />
+      {gameStarted && (
+        gameCompleted && showGameOver ? (
+          <>
+            <GameOver gameType='Jogo da memória' feedback={feedback} onRestart={shuffleCards} elapsedTime={timeElapsed}/>
+            <Confetti 
+              width={width}
+              height={height}
+              numberOfPieces={800}
+              gravity={0.3}
+              wind={0.01}
+              friction={0.99}
+              tweenDuration={5000}
+            />
+          </>
+      ) : (
+        <>
+          <div className="memory-game">
+            <div className="card-grid">
+              {cards.map((card) => (
+                <SingleCard
+                  key={card.id}
+                  card={card}
+                  handleChoice={handleChoice}
+                  flipped={card === choiceOne || card === choiceTwo || card.matched}
+                  disabled={disabled}
+                />
+              ))}
+            </div>
+          </div>
+          <center><h3>Tentativas: {turns}</h3></center>
+        </>
+      )
+    )}
     </div>
   );
 };

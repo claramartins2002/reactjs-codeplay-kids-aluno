@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { JigsawPuzzle } from "react-jigsaw-puzzle/lib";
 import useWindowSize from 'react-use/lib/useWindowSize';
+import trilha from '../../../sound/trilha3.mp3';
+import acerto from '../../../sound/acerto.mp3';
+import AudioManager from '../../../utils/audioManager';
 import "react-jigsaw-puzzle/lib/jigsaw-puzzle.css";
 import Confetti from 'react-confetti';
 import './QuebraCabeca.css';
@@ -8,6 +11,8 @@ import { AuthContext } from '../../../AuthContext';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { Typography } from '@mui/material';
+import GameHeader from '../../../components/GameHeader';
+import GameOver from '../../../components/GameOver';
 
 function PuzzleGame() {
   const [isExploding, setIsExploding] = useState(false);
@@ -21,6 +26,20 @@ function PuzzleGame() {
   const activityId = searchParams.get('id'); // Captura o 'id' da atividade
   const API_URL = 'http://localhost:8080/relatorio'; // Atualize com a URL do seu backend
   const [feedback, setFeedback] = useState('');
+  const { width, height } = useWindowSize();
+  const [showGameOver, setShowGameOver] = useState(false);
+
+  // Inicialização dos sons
+  const [ambientSound] = useState(new AudioManager(trilha, { loop: true, volume: 0.3 }));
+  const [correctSound] = useState(new AudioManager(acerto, { allowMultiplePlays: true }));
+
+  // Limpeza do áudio quando o componente for desmontado
+    useEffect(() => {
+      return () => {
+        ambientSound.stop();
+        correctSound.stop();
+      };
+    }, []);
 
   const images = [
     'https://cdn.pixabay.com/photo/2023/09/21/11/30/cat-8266486_1280.jpg',
@@ -33,7 +52,9 @@ function PuzzleGame() {
   const startPuzzle = () => {
     setIsStarted(true);
     setIsRunning(true); // Inicia o timer
+    ambientSound.play();
     setIsCompleted(false); // Reseta o estado de completado
+    setShowGameOver(false);
 
     // Escolhe uma imagem aleatória no início do jogo
     setSelectedImage(images[Math.floor(Math.random() * images.length)]);
@@ -53,15 +74,14 @@ function PuzzleGame() {
 
   // Controle do cronômetro
   useEffect(() => {
-    const timer = setInterval(() => {
-      if (!isCompleted) {
+    if (isRunning) {
+      const timer = setInterval(() => {
         setTimeElapsed((prevTime) => prevTime + 1);
-      }
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [isCompleted]);
+      }, 1000);
 
-  const { width, height } = useWindowSize();
+      return () => clearInterval(timer); // Limpa o timer ao desmontar ou parar
+    }
+  }, [isRunning]); // Dependente de isRunning
 
   // Função para enviar os dados para o backend
   const saveGameReport = async () => {
@@ -84,33 +104,42 @@ function PuzzleGame() {
   // Salvar o relatório quando o jogo terminar
   useEffect(() => {
     if (isCompleted) {
+      correctSound.play()
       saveGameReport();
+      const timer = setTimeout(() => {
+        setShowGameOver(true); // Exibe o GameOver após 1 segundo
+      }, 1000);
+      return () => clearTimeout(timer); // Limpa o timer ao desmontar
     }
   }, [isCompleted]);
 
   return (
-    <div className="game">
+    <div className="puzzle-container">
       {!isStarted ? (
-        <>         
-          <h3>Atenção! Ao iniciar o jogo, o cronômetro será ativado</h3>
-          <button className="start-button" onClick={startPuzzle}>Iniciar Quebra-Cabeça</button>
-        </>
-      ) : isCompleted ? (
-        <div className="game-menu">
-          <Typography variant="h6" sx={{fontFamily: 'Irish Grover', marginBottom: '5%'}}>{feedback}</Typography>
-          <center><button onClick={() => {setIsStarted(false); setTimeElapsed(0)}} >Jogar Novamente</button></center>
-        </div>
+        <GameHeader 
+          gameStarted={isStarted} 
+          onStartGame={startPuzzle}
+          game="Quebra Cabeça"
+        />
+      ) : isCompleted && showGameOver ? (
+        <GameOver
+          elapsedTime={timeElapsed}
+          feedback={feedback}
+          onRestart={() => {setIsStarted(false); setTimeElapsed(0)}}
+        />
       ) : (
         <>
          <center> <Typography variant="h6" sx={{  fontFamily: 'Irish Grover'}}>Tempo decorrido: {timeElapsed}s</Typography></center>
-          {isCompleted && <Typography>Você completou o jogo em {timeElapsed} segundos!</Typography>}
+          {/* {isCompleted && <Typography>Você completou o jogo em {timeElapsed} segundos!</Typography>} */}
           {selectedImage && (
-            <JigsawPuzzle
-              imageSrc={selectedImage}
-              rows={3}
-              columns={3}
-              onSolved={onComplete}
-            />
+            <div className="puzzle-game">
+              <JigsawPuzzle
+                imageSrc={selectedImage}
+                rows={3}
+                columns={3}
+                onSolved={onComplete}
+              />
+            </div>
           )}
         </>
       )}

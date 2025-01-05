@@ -23,7 +23,7 @@ const gameColors = {
     hoverBackground: '#fef7df',
     border: '#f8ce45',
   },
-  'memory': {
+  'Jogo da memória': {
     text: '#e8ebfe',
     background: '#456ff8',
     hoverText: '#456ff8',
@@ -50,6 +50,13 @@ const gameColors = {
     hoverText: '#6fa3df',
     hoverBackground: '#F2E8B3',
     border: '#6fa3df'
+  },
+  'Quebra Cabeça': {
+    text: '#fbdeb2',
+    background: '#f4a428',
+    hoverText: '#f4a428',
+    hoverBackground: '#fbdeb2',
+    border: '#f4a428'
   },
   default: {
     text: '#e4f6f4',

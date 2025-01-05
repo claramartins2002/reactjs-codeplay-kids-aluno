@@ -2,8 +2,17 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Button, Card, CardContent, Typography, Grid, Box } from '@mui/material';
 import { green, red, blue, yellow, pink, purple, orange } from '@mui/material/colors';
 import { AuthContext } from '../../../AuthContext';
+import trilha from '../../../sound/trilha.mp3';
+import acerto from '../../../sound/acerto.mp3';
+import erro from '../../../sound/erro.mp3';
+import AudioManager from '../../../utils/audioManager';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
+import GameHeader from '../../../components/GameHeader';
+import GameOver from '../../../components/GameOver';
+import ScoreBoard from '../../../components/ScoreBoard';
+import { styles } from './styles';
+import GameProgress from '../../../components/GameProgress';
 
 // Conjunto de formas e cores para reconhecimento
 const shapes = ['círculo', 'quadrado', 'triângulo'];
@@ -48,31 +57,14 @@ const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
 // Função para renderizar a forma
 const renderShape = (shape, color) => {
-  const shapeStyle = {
-    backgroundColor: color,
-    width: '100px',
-    height: '100px',
-    display: 'inline-block',
-  };
 
   switch (shape) {
     case 'círculo':
-      return <div style={{ ...shapeStyle, borderRadius: '50%' }}></div>;
+      return <div style={{ ...styles.shapeStyle(color), borderRadius: '50%' }}></div>;
     case 'quadrado':
-      return <div style={{ ...shapeStyle }}></div>;
+      return <div style={{ ...styles.shapeStyle(color) }}></div>;
     case 'triângulo':
-      return (
-        <div
-          style={{
-            width: 0,
-            height: 0,
-            borderLeft: '50px solid transparent',
-            borderRight: '50px solid transparent',
-            borderBottom: `100px solid ${color}`,
-            display: 'inline-block',
-          }}
-        ></div>
-      );
+      return ( <Box sx={styles.renderShape(color)}></Box> );
     default:
       return null;
   }
@@ -91,25 +83,51 @@ const ShapeColorGame = () => {
   const [gameOver, setGameOver] = useState(false);
   const [feedback, setFeedback] = useState('');
   const [elapsedTime, setElapsedTime] = useState(0); // Cronômetro
-// Controle do cronômetro
-useEffect(() => {
-  const timer = setInterval(() => {
+  const [gameStarted, setGameStarted] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  // Inicialização dos sons
+  const [ambientSound] = useState(new AudioManager(trilha, { loop: true, volume: 0.3 }));
+  const [correctSound] = useState(new AudioManager(acerto, { allowMultiplePlays: true }));
+  const [wrongSound] = useState(new AudioManager(erro, { allowMultiplePlays: true }));
+
+  // Controle do cronômetro
+  useEffect(() => {
+    const timer = setInterval(() => {
       if (!gameOver) {
-          setElapsedTime((prevTime) => prevTime + 1);
+        setElapsedTime((prevTime) => prevTime + 1);
       }
-  }, 1000);
-  return () => clearInterval(timer);
-}, [gameOver]);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [gameOver]);
+
+  const startGame = () => {
+    setGameStarted(true);
+    ambientSound.play();
+  };
+
+  const restartGame = () => {
+    setScore(0);
+    setErrors(0);
+    setQuestionCount(1);
+    setGameOver(false);
+    setMessage('');
+  };
 
   const handleAnswer = (answer) => {
     if (gameOver) return;
 
     if (answer === currentShapeColor.correctLabel) {
       setScore(score + 1);
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 2000);
       setMessage('Acertou! 🎉');
+      correctSound.play();
     } else {
+      wrongSound.play();
       setErrors(errors + 1);
       setMessage('Errou! 😞');
+      
     }
 
     if (questionCount < 15) {
@@ -153,38 +171,28 @@ useEffect(() => {
   }
 }, [gameOver]);
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        padding: 3,
-      }}
-    >
-      <Typography variant="h4" sx={{ mb: 2, color: blue[700], fontWeight: 'bold' }}>
-        Jogo de Formas e Cores 🎨🔵
-      </Typography>
-      {!gameOver ? (
+    <Box sx={styles.container}>
+      <GameHeader 
+        gameStarted={gameStarted} 
+        onStartGame={startGame}
+        game="Formas e Cores"
+      />
+      {gameStarted && (
+        gameOver ? (
         <>
-          <Card
-            sx={{
-              maxWidth: 400,
-              backgroundColor: blue[100],
-              boxShadow: '0 0 10px rgba(0,0,0,0.2)',
-              borderRadius: 3,
-            }}
-          >
+          <GameOver 
+            score={score}
+            errors={errors}
+            elapsedTime={elapsedTime}
+            feedback={feedback}
+            onRestart={restartGame}
+          />
+        </>
+      ) : (
+        <>
+          <Card sx={styles.card}>
             <CardContent>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginBottom: 2,
-                }}
-              >
+              <Box sx={styles.box}>
                 {renderShape(currentShapeColor.shape, currentShapeColor.color)}
               </Box>
               <Grid container spacing={2}>
@@ -194,16 +202,7 @@ useEffect(() => {
                       fullWidth
                       variant="contained"
                       onClick={() => handleAnswer(option)}
-                      sx={{
-                        backgroundColor: blue[400],
-                        '&:hover': {
-                          backgroundColor: blue[600],
-                        },
-                        fontSize: '1rem',
-                        fontWeight: 'bold',
-                        color: 'white',
-                        boxShadow: '0 0 5px rgba(0,0,0,0.2)',
-                      }}
+                      sx={styles.button}
                     >
                       {option}
                     </Button>
@@ -212,31 +211,22 @@ useEffect(() => {
               </Grid>
             </CardContent>
           </Card>
-          <Typography variant="h6" sx={{ mt: 2, color: green[600] }}>
-            {message}
-          </Typography>
-          <Typography variant="h6" sx={{ mt: 2, color: blue[900] }}>
-            Pontuação: {score} | Questão: {questionCount}/15
-          </Typography>
-          <Typography variant="h6" sx={{ mt: 1, color: red[700] }}>
-            Erros: {errors}
-          </Typography>
-        </>
-      ) : (
-        <>
-          <Typography variant="h5" sx={{ color: green[600] }}>
-            Jogo finalizado! 🎉
-          </Typography>
-          <Typography variant="h6" sx={{ mt: 2, color: blue[900] }}>
-            Pontuação final: {score}/15
-          </Typography>
-          <Typography variant="h6" sx={{ mt: 2, color: blue[900] }}>
-            Tempo total: {elapsedTime} s
-          </Typography>
-          <Typography> {feedback}</Typography>
+          <div className="score-board-container">
+            <GameProgress 
+              message={message}
+              questionCount={questionCount}
+              showConfetti={showConfetti}
+            />
+            <ScoreBoard 
+              score={score}
+              errors={errors}
+              questionCount={questionCount}
+            />
+          </div>
           
         </>
-      )}
+      )
+    )}
     </Box>
   );
 };

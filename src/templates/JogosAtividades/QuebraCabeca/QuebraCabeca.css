@@ -2,15 +2,21 @@ body {
   background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(231,231,246,1) 35%, rgba(175,223,253,1) 100%);
 
 }
-.game {
-  max-width: 500px;
-  max-height: 500px;
+.puzzle-container {
+  max-width: 60%;
+  max-height: 60%;
   margin: 40px auto;
   padding: 5%;
   font-family: 'Irish Grover';
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
+.puzzle-game {
+  width: 55%;
+  height: 55%;
+  margin: auto;
+}
 .game-menu {
   max-width: 70%;
   max-height: 100%;

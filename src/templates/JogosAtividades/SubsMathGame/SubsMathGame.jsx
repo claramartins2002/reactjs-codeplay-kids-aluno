@@ -5,7 +5,7 @@ import acerto from '../../../sound/acerto.mp3';
 import erro from '../../../sound/erro.mp3';
 import AudioManager from '../../../utils/audioManager';
 import { styles } from '../../../utils/styles';
-import axios from 'axios'; // Biblioteca para requisições HTTP
+import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 import { AuthContext } from '../../../AuthContext';
 import { generateSubtractionQuestion } from '../../../utils/mathGameUtils';
@@ -136,6 +136,7 @@ const SubsMathGame = () => {
       <GameHeader 
         gameStarted={gameStarted} 
         onStartGame={startGame}
+        game="Subtração de Números"
       />
 
       {gameStarted && (

@@ -85,16 +85,29 @@ export const styles = {
     background: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(231,231,246,1) 35%, rgba(175,223,253,1) 100%)',
   },
 
+  boxGameHeader: {
+    position: 'absolute',
+    display: 'flex',
+    flexDirection: 'column',
+    margin: '20px auto',
+    right: '40%',
+  },
+
   title: (gameType) => ({
     mb: 2,
-    color: gameType === 'Palavras Cruzadas' ? '#FFF' : blue[700],
+    color: blue[700],
     fontWeight: 'bold',
     fontFamily: 'Irish Grover',
+    width: '400px',
+    textAlign: 'center',
   }),
 
   startButton: (gameType) => {
     const colors = gameColors[gameType] || gameColors.default;
     return {
+      width: '50%',
+      height: '60px',
+      margin: 'auto',
       fontSize: '1.2rem',
       fontWeight: 'bold',
       padding: '1%',

@@ -149,33 +149,34 @@ export default function CrosswordComponent() {
   return (
     <div className="crossword-container">
       {!gameStarted && <GameHeader gameStarted={gameStarted} onStartGame={startGame} game="Palavras Cruzadas" />}
+        {gameStarted && !gameOver && (
+          <div className="crossword-game-container">
+            <ThemeProvider theme={theme}>
+              <CrosswordProvider
+                data={crosswordData}
+                ref={crosswordRef}
+                onCrosswordCorrect={() => setTimeout(checkIfSolved, 0)}
+              >
+                <div className="crossword-content">
+                  <DirectionClues direction="across" label="Vertical" />
+                  <div className="crossword-grid">
+                    <CrosswordGrid />
+                  </div>
+                  <DirectionClues direction="down" label="Horizontal" />
+                </div>
+              </CrosswordProvider>
+            </ThemeProvider>
+          </div>
+        )}
 
-      {gameStarted && !gameOver && (
-        <ThemeProvider theme={theme}>
-          <CrosswordProvider
-            data={crosswordData}
-            ref={crosswordRef}
-            onCrosswordCorrect={() => setTimeout(checkIfSolved, 0)}
-          >
-            <div className="crossword-content">
-              <DirectionClues direction="across" label="Vertical" />
-              <div className="crossword-grid">
-                <CrosswordGrid />
-              </div>
-              <DirectionClues direction="down" label="Horizontal" />
-            </div>
-          </CrosswordProvider>
-        </ThemeProvider>
-      )}
-
-      {gameOver && (
-        <GameOver
-          elapsedTime={elapsedTime}
-          feedback={feedback}
-          onRestart={restartGame}
-          gameType="Palavras Cruzadas"
-        />
-      )}
+        {gameOver && (
+          <GameOver
+            elapsedTime={elapsedTime}
+            feedback={feedback}
+            onRestart={restartGame}
+            gameType="Palavras Cruzadas"
+          />
+        )}
     </div>
   );
 }

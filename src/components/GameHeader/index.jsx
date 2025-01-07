@@ -1,10 +1,10 @@
 import React from 'react';
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Box } from '@mui/material';
 import { styles } from '../../utils/styles';
 
 const GameHeader = ({ gameStarted, onStartGame, game }) => {
   return (
-    <>
+    <Box sx={styles.boxGameHeader}>
       <Typography variant="h3" sx={styles.title(game)}>
         {game}
       </Typography>
@@ -17,7 +17,7 @@ const GameHeader = ({ gameStarted, onStartGame, game }) => {
           Iniciar Jogo
         </Button>
       )}
-    </>
+    </Box>
   );
 };
 

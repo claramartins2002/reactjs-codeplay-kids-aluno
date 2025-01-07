@@ -180,9 +180,9 @@ export const CacaPalavras = () => {
           {/* <h3>Atenção! Ao iniciar o jogo, o cronômetro será ativado</h3> */}
         </>
       )}
-      {isGameActive && (
+      {/* {isGameActive && (
         <Timer isRunning={isGameActive} onComplete={(timeElapsed) => console.log(`Tempo total: ${timeElapsed} segundos`)} />
-      )}
+      )} */}
       <div className={`answer-words-container ${isGameActive ? "active" : "inactive"}`}>
         {answerWords.map((element) => (
           <span key={element} className="answer-word">

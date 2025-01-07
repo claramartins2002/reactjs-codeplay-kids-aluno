@@ -25,17 +25,18 @@
   align-items: center;
   background-color: #fff;
   border-radius: 1rem;
-  margin: auto;
+  margin: 20px;
   margin-top: 1%;
   border: 0.2rem solid rgb(0, 218, 145);
+  flex-direction: column;
 }
 
 .cacapalavras-game-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   position: relative;
+  flex-direction: row-reverse;
 }
 
 .start-button {

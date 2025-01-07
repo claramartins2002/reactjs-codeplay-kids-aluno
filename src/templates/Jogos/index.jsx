@@ -39,10 +39,10 @@ function Jogos() {
     'Divisão de Números': '/jogos/div-math-game',
     'Palavras Cruzadas': '/jogos/crossword',
     'Caça Palavras': '/jogos/caca-palavras',
-    'Formas Geométricas e Cores': '/jogos/shape-color',
-    'Jogo das Imagens': '/jogos/imagem-palavra-associacao',
+    'Formas e Cores': '/jogos/shape-color',
     'Jogo da Contagem': '/jogos/counting',
-    'Que horas são ?': '/jogos/relogio-horas'
+    'Que horas são ?': '/jogos/relogio-horas',
+    'Que animal é esse ?': '/jogos/imagem-palavra-associacao'
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from 'react';
+import { React, useState, useEffect, useRef, useContext } from 'react';
 import { CrosswordProvider, CrosswordGrid, DirectionClues, ThemeProvider } from '@jaredreisinger/react-crossword';
 import './CrosswordComponent.css';
 import { gerarLayoutCrossword } from './utils';
@@ -9,6 +9,8 @@ import AudioManager from '../../../utils/audioManager';
 import axios from 'axios';
 import GameHeader from '../../../components/GameHeader';
 import GameOver from '../../../components/GameOver';
+import { Box } from '@mui/material';
+import { styles } from '../../../utils/styles';
 
 const theme = {
   gridBackground: '#8BC34A',
@@ -66,6 +68,13 @@ export default function CrosswordComponent() {
   const allCategories = [mockData, mockDataFruits];
 
   const [ambientSound] = useState(new AudioManager(trilha, { loop: true, volume: 0.3 }));
+
+  // Limpeza do áudio quando o componente for desmontado
+  useEffect(() => {
+    return () => {
+      ambientSound.stop();
+    };
+  }, []);
 
   useEffect(() => {
     const randomCategory = allCategories[Math.floor(Math.random() * allCategories.length)];
@@ -147,7 +156,7 @@ export default function CrosswordComponent() {
   }, [gameOver]);
 
   return (
-    <div className="crossword-container">
+    <Box sx={styles.container}>
       {!gameStarted && <GameHeader gameStarted={gameStarted} onStartGame={startGame} game="Palavras Cruzadas" />}
         {gameStarted && !gameOver && (
           <div className="crossword-game-container">
@@ -177,6 +186,6 @@ export default function CrosswordComponent() {
             gameType="Palavras Cruzadas"
           />
         )}
-    </div>
+    </Box>
   );
 }

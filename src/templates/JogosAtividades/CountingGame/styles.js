@@ -1,6 +1,6 @@
 export const styles = {
   box: {
-    minHeight: '50vh',
+    minHeight: '70vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

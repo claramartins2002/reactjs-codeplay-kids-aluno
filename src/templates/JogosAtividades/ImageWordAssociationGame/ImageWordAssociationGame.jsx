@@ -189,12 +189,14 @@ const ImageWordAssociationGame = () => {
 
   return (
     <Box sx={styles.box} >
-      <GameHeader 
-        gameStarted={gameStarted} 
-        onStartGame={startGame}
-        game="Que animal é esse ?"
-      />
-      {gameStarted && (
+      {!gameStarted ? (
+        <GameHeader 
+          gameStarted={gameStarted} 
+          onStartGame={startGame}
+          game="Que animal é esse ?"
+        />
+      ) : (
+      gameStarted && (
         gameOver ? (
         <GameOver 
           score={score}
@@ -269,6 +271,7 @@ const ImageWordAssociationGame = () => {
             />
           </Box>
       </>
+      )
       )
     )}
     </Box>

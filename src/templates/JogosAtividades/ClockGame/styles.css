@@ -121,12 +121,18 @@
   font-size: 20px;
   border-radius: 15px;
   font-family: "Itim", cursive;
-  border-bottom: 5px solid #f7c203;
-  background: #f8ce45;
+  background: #f7c203;
+  box-shadow: 0 5px #f8ce45;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .clock-game-button:hover {
-  background: #f8ce45;
+  background: #f7c203;
+}
+
+.clock-game-button:active {
+  transform: translateY(6px);
+  box-shadow: 0;
 }
 
 .twelve {

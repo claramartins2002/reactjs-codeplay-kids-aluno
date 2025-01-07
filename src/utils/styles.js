@@ -8,6 +8,7 @@ const gameColors = {
     hoverText: '#3c9fff',
     hoverBackground: '#e4f3ff',
     border: '#3c9fff',
+    backgroundContainer: '#ffab4a'
   },
   'Caça Palavras': {
     text: '#e0f9ec',
@@ -15,6 +16,7 @@ const gameColors = {
     hoverText: '#00da91',
     hoverBackground: '#e0f9ec',
     border: '#00da91',
+    backgroundContainer: '#f45b7e'
   },
   'Que horas são ?': {
     text: '#fef7df',
@@ -22,6 +24,7 @@ const gameColors = {
     hoverText: '#f8ce45',
     hoverBackground: '#fef7df',
     border: '#f8ce45',
+    backgroundContainer: '#6f8afa'
   },
   'Jogo da memória': {
     text: '#e8ebfe',
@@ -29,41 +32,47 @@ const gameColors = {
     hoverText: '#456ff8',
     hoverBackground: '#e8ebfe',
     border: '#456ff8',
+    backgroundContainer: '#f8ce45'
   },
   'Palavras Cruzadas': {
     text: '#FFF',
-    background: '#A5D6A7',
-    hoverText: '#A5D6A7',
+    background: '#8BC34A',
+    hoverText: '#8BC34A',
     hoverBackground: '#FFF',
-    border: '#A5D6A7',
+    border: '#8BC34A',
+    backgroundContainer: '#d6a5d4'
   },
   'Arrasta e Solta': {
     text: '#eee5f6',
     background: '#6c27b8',
     hoverText: '#6c27b8',
     hoverBackground: '#eee5f6',
-    border: '#6c27b8'
+    border: '#6c27b8',
+    backgroundContainer: '#81c82f'
   },
   'Que animal é esse ?': {
     text: '#F2E8B3',
     background: '#6fa3df',
     hoverText: '#6fa3df',
     hoverBackground: '#F2E8B3',
-    border: '#6fa3df'
+    border: '#6fa3df',
+    backgroundContainer: '#dfab6f'
   },
   'Quebra Cabeça': {
     text: '#fbdeb2',
     background: '#f4a428',
     hoverText: '#f4a428',
     hoverBackground: '#fbdeb2',
-    border: '#f4a428'
+    border: '#f4a428',
+    backgroundContainer: '#3babff'
   },
   'Formas e Cores': {
     text: '#fae8f9',
     background: '#e274dd',
     hoverText: '#e274dd',
     hoverBackground: '#fae8f9',
-    border: '#e274dd'
+    border: '#e274dd',
+    backgroundContainer: '#a1eaa2'
   },
   default: {
     text: '#e4f6f4',
@@ -71,36 +80,44 @@ const gameColors = {
     hoverText: '#91ddcf',
     hoverBackground: '#e4f6f4',
     border: '#91ddcf',
+    backgroundContainer: '#dd919f'
   },
 };
 
 export const styles = {
   container: {
-    minHeight: '100vh',
+    minHeight: '80vh',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     flexDirection: 'column',
     padding: 1,
     background: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(231,231,246,1) 35%, rgba(175,223,253,1) 100%)',
   },
 
-  boxGameHeader: {
-    position: 'absolute',
-    display: 'flex',
-    flexDirection: 'column',
-    margin: '20px auto',
-    right: '40%',
+  boxGameHeader: (gameType) => {
+    const colors = gameColors[gameType] || gameColors.default;
+    return {
+      display: 'flex',
+      flexDirection: 'column',
+      margin: '20px auto',
+      background: colors.backgroundContainer,
+      padding: '50px 30px',
+      borderRadius: '20px',
+    }
   },
 
-  title: (gameType) => ({
-    mb: 2,
-    color: blue[700],
-    fontWeight: 'bold',
-    fontFamily: 'Irish Grover',
-    width: '400px',
-    textAlign: 'center',
-  }),
+  title: (gameType) => {
+    const colors = gameColors[gameType] || gameColors.default;
+    return {
+      mb: 2,
+      color: colors.text,
+      fontWeight: 'bold',
+      fontFamily: 'Irish Grover',
+      width: '400px',
+      textAlign: 'center',
+    }
+  },
 
   startButton: (gameType) => {
     const colors = gameColors[gameType] || gameColors.default;
@@ -123,6 +140,7 @@ export const styles = {
   },
 
   gameCard: {
+    top: '60%',
     minWidth: 800,
     backgroundColor: '#91ddcf',
     boxShadow: '0 0 10px rgba(0,0,0,0.2)',

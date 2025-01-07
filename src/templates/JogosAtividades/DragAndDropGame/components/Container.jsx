@@ -60,6 +60,13 @@ export const Container = memo(function Container() {
     new AudioManager(trilha, { loop: true, volume: 0.3 })
   );
 
+  // Limpeza do áudio quando o componente for desmontado
+  useEffect(() => {
+    return () => {
+      ambientSound.stop();
+    };
+  }, []);
+
   const allDustbinsFilled = useCallback(() => {
     return dustbins.every(dustbin => dustbin.lastDroppedItem !== null);
   }, [dustbins]);

@@ -167,23 +167,15 @@ export const CacaPalavras = () => {
 
   return (
     <div className='cacapalavras-game-container'>
-      {!isGameActive && (
+      {!isGameActive ? (
+        <GameHeader 
+          gameStarted={isGameActive} 
+          onStartGame={startGame}
+          game="Caça Palavras"
+        />
+      ): (
         <>
-          {/* <button className="start-button" onClick={startGame}>
-            INICIAR JOGO
-          </button> */}
-          <GameHeader 
-            gameStarted={isGameActive} 
-            onStartGame={startGame}
-            game="Caça Palavras"
-          />
-          {/* <h3>Atenção! Ao iniciar o jogo, o cronômetro será ativado</h3> */}
-        </>
-      )}
-      {/* {isGameActive && (
-        <Timer isRunning={isGameActive} onComplete={(timeElapsed) => console.log(`Tempo total: ${timeElapsed} segundos`)} />
-      )} */}
-      <div className={`answer-words-container ${isGameActive ? "active" : "inactive"}`}>
+          <div className={`answer-words-container ${isGameActive ? "active" : "inactive"}`}>
         {answerWords.map((element) => (
           <span key={element} className="answer-word">
             <h2 className={`answer-text ${isInList(element, found) ? "line-through" : ""}`}>
@@ -220,6 +212,9 @@ export const CacaPalavras = () => {
           }}
         />
       </div>
+        </>
+      )}
+      
       <RelatorioFinal 
         dialogOpen={dialogOpen} 
         handleEndGame={handleEndGame} 

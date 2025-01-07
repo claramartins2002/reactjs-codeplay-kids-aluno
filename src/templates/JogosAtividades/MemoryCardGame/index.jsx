@@ -158,44 +158,47 @@ const MemoryCardGame = () => {
 
   return (
     <div className="container-memory-game">
-      <GameHeader 
-        gameStarted={gameStarted} 
-        onStartGame={startGame}
-        game="Jogo da memória"
-      />
-      {gameStarted && (
-        gameCompleted && showGameOver ? (
-          <>
-            <GameOver gameType='Jogo da memória' feedback={feedback} onRestart={shuffleCards} elapsedTime={timeElapsed}/>
-            <Confetti 
-              width={width}
-              height={height}
-              numberOfPieces={800}
-              gravity={0.3}
-              wind={0.01}
-              friction={0.99}
-              tweenDuration={5000}
-            />
-          </>
+      {!gameStarted ? (
+        <GameHeader 
+          gameStarted={gameStarted} 
+          onStartGame={startGame}
+          game="Jogo da memória"
+        />
       ) : (
-        <>
-          <div className="memory-game">
-            <div className="card-grid">
-              {cards.map((card) => (
-                <SingleCard
-                  key={card.id}
-                  card={card}
-                  handleChoice={handleChoice}
-                  flipped={card === choiceOne || card === choiceTwo || card.matched}
-                  disabled={disabled}
-                />
-              ))}
+        gameStarted && (
+          gameCompleted && showGameOver ? (
+            <>
+              <GameOver gameType='Jogo da memória' feedback={feedback} onRestart={shuffleCards} elapsedTime={timeElapsed}/>
+              <Confetti 
+                width={width}
+                height={height}
+                numberOfPieces={800}
+                gravity={0.3}
+                wind={0.01}
+                friction={0.99}
+                tweenDuration={5000}
+              />
+            </>
+        ) : (
+          <>
+            <div className="memory-game">
+              <div className="card-grid">
+                {cards.map((card) => (
+                  <SingleCard
+                    key={card.id}
+                    card={card}
+                    handleChoice={handleChoice}
+                    flipped={card === choiceOne || card === choiceTwo || card.matched}
+                    disabled={disabled}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-          <center><h3>Tentativas: {turns}</h3></center>
-        </>
-      )
-    )}
+            <center><h3>Tentativas: {turns}</h3></center>
+          </>
+        )
+        )
+      )}
     </div>
   );
 };

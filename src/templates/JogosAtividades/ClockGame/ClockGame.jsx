@@ -156,98 +156,100 @@ const ClockGame = () => {
 
   return (
     <Box sx={styles.container}>
-      <GameHeader 
-        gameStarted={gameStarted} 
-        onStartGame={startGame}
-        game="Que horas são ?"
-      />
+      {!gameStarted ? (
+        <GameHeader 
+          gameStarted={gameStarted} 
+          onStartGame={startGame}
+          game="Que horas são ?"
+        />
+      ) : (
+        gameStarted && (
+          gameOver ? (
+            <GameOver 
+              score={score}
+              errors={errors}
+              elapsedTime={elapsedTime}
+              feedback={feedback}
+              onRestart={restartGame}
+              gameType='relogio'
+            />
+          ) : (
+            <>
+              <div className="clock">
+                {/* Ponteiro das horas */}
+                <div
+                  className="hour_hand"
+                  style={{
+                    transform: `rotateZ(${time.getHours() * 30}deg)` // 30 graus por hora
+                  }}
+                />
 
-      {gameStarted && (
-        gameOver ? (
-          <GameOver 
-            score={score}
-            errors={errors}
-            elapsedTime={elapsedTime}
-            feedback={feedback}
-            onRestart={restartGame}
-            gameType='relogio'
-          />
-        ) : (
-          <>
-            <div className="clock">
-              {/* Ponteiro das horas */}
-              <div
-                className="hour_hand"
-                style={{
-                  transform: `rotateZ(${time.getHours() * 30}deg)` // 30 graus por hora
-                }}
-              />
+                {/* Ponteiro dos minutos */}
+                <div
+                  className="min_hand"
+                  style={{
+                    transform: `rotateZ(${time.getMinutes() * 6}deg)` // 6 graus por minuto
+                  }}
+                />
 
-              {/* Ponteiro dos minutos */}
-              <div
-                className="min_hand"
-                style={{
-                  transform: `rotateZ(${time.getMinutes() * 6}deg)` // 6 graus por minuto
-                }}
-              />
+                {/* Números do relógio */}
+                <span className="clock-number twelve">12</span>
+                <span className="clock-number one">1</span>
+                <span className="clock-number two">2</span>
+                <span className="clock-number three">3</span>
+                <span className="clock-number four">4</span>
+                <span className="clock-number five">5</span>
+                <span className="clock-number six">6</span>
+                <span className="clock-number seven">7</span>
+                <span className="clock-number eight">8</span>
+                <span className="clock-number nine">9</span>
+                <span className="clock-number ten">10</span>
+                <span className="clock-number eleven">11</span>
+              </div>
 
-              {/* Números do relógio */}
-              <span className="clock-number twelve">12</span>
-              <span className="clock-number one">1</span>
-              <span className="clock-number two">2</span>
-              <span className="clock-number three">3</span>
-              <span className="clock-number four">4</span>
-              <span className="clock-number five">5</span>
-              <span className="clock-number six">6</span>
-              <span className="clock-number seven">7</span>
-              <span className="clock-number eight">8</span>
-              <span className="clock-number nine">9</span>
-              <span className="clock-number ten">10</span>
-              <span className="clock-number eleven">11</span>
-            </div>
+              <div className={`input-container ${messageType}`}>
+                <input
+                  type="number"
+                  className="input-hour"
+                  name="inputHour"
+                  value={inputHour}
+                  onChange={handleInputChange}
+                  min="1"
+                  max="12"
+                />
+                <span className="time-separator">:</span>
+                <input
+                  type="number"
+                  className="input-min"
+                  name="inputMinute"
+                  value={inputMinute}
+                  onChange={handleInputChange}
+                  min="0"
+                  max="59"
+                  step="10"
+                />
+                <button onClick={handleSubmit} className="clock-game-button">
+                  OK
+                </button>
+              </div>
 
-            <div className={`input-container ${messageType}`}>
-              <input
-                type="number"
-                className="input-hour"
-                name="inputHour"
-                value={inputHour}
-                onChange={handleInputChange}
-                min="1"
-                max="12"
-              />
-              <span className="time-separator">:</span>
-              <input
-                type="number"
-                className="input-min"
-                name="inputMinute"
-                value={inputMinute}
-                onChange={handleInputChange}
-                min="0"
-                max="59"
-                step="10"
-              />
-              <button onClick={handleSubmit} className="clock-game-button">
-                OK
-              </button>
-            </div>
-
-            <div className="score-board-container">
-              <GameProgress 
-                message={message}
-                questionCount={questionCount}
-                showConfetti={showConfetti}
-                totalQuestions={10}
-              />
-              
-              <ScoreBoard 
-                score={score}
-                errors={errors}
-                questionCount={questionCount}
-                totalQuestions={10}
-              />
-            </div>
-          </>
+              <div className="score-board-container">
+                <GameProgress 
+                  message={message}
+                  questionCount={questionCount}
+                  showConfetti={showConfetti}
+                  totalQuestions={10}
+                />
+                
+                <ScoreBoard 
+                  score={score}
+                  errors={errors}
+                  questionCount={questionCount}
+                  totalQuestions={10}
+                />
+              </div>
+            </>
+          )
         )
       )}
     </Box>

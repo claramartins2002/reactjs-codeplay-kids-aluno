@@ -172,61 +172,64 @@ useEffect(() => {
 }, [gameOver]);
   return (
     <Box sx={styles.container}>
-      <GameHeader 
-        gameStarted={gameStarted} 
-        onStartGame={startGame}
-        game="Formas e Cores"
-      />
-      {gameStarted && (
-        gameOver ? (
-        <>
-          <GameOver 
-            score={score}
-            errors={errors}
-            elapsedTime={elapsedTime}
-            feedback={feedback}
-            onRestart={restartGame}
-          />
-        </>
+      {!gameStarted ? (
+        <GameHeader 
+          gameStarted={gameStarted} 
+          onStartGame={startGame}
+          game="Formas e Cores"
+        />
       ) : (
-        <>
-          <Card sx={styles.card}>
-            <CardContent>
-              <Box sx={styles.box}>
-                {renderShape(currentShapeColor.shape, currentShapeColor.color)}
-              </Box>
-              <Grid container spacing={2}>
-                {currentShapeColor.options.map((option, index) => (
-                  <Grid item xs={4} key={index}>
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      onClick={() => handleAnswer(option)}
-                      sx={styles.button}
-                    >
-                      {option}
-                    </Button>
+        gameStarted && (
+          gameOver ? (
+            <>
+              <GameOver 
+                score={score}
+                errors={errors}
+                elapsedTime={elapsedTime}
+                feedback={feedback}
+                onRestart={restartGame}
+              />
+            </>
+          ) : (
+            <>
+              <Card sx={styles.card}>
+                <CardContent>
+                  <Box sx={styles.box}>
+                    {renderShape(currentShapeColor.shape, currentShapeColor.color)}
+                  </Box>
+                  <Grid container spacing={2}>
+                    {currentShapeColor.options.map((option, index) => (
+                      <Grid item xs={4} key={index}>
+                        <Button
+                          fullWidth
+                          variant="contained"
+                          onClick={() => handleAnswer(option)}
+                          sx={styles.button}
+                        >
+                          {option}
+                        </Button>
+                      </Grid>
+                    ))}
                   </Grid>
-                ))}
-              </Grid>
-            </CardContent>
-          </Card>
-          <div className="score-board-container">
-            <GameProgress 
-              message={message}
-              questionCount={questionCount}
-              showConfetti={showConfetti}
-            />
-            <ScoreBoard 
-              score={score}
-              errors={errors}
-              questionCount={questionCount}
-            />
-          </div>
-          
-        </>
-      )
-    )}
+                </CardContent>
+              </Card>
+              <div className="score-board-container">
+                <GameProgress 
+                  message={message}
+                  questionCount={questionCount}
+                  showConfetti={showConfetti}
+                />
+                <ScoreBoard 
+                  score={score}
+                  errors={errors}
+                  questionCount={questionCount}
+                />
+              </div>
+              
+            </>
+          )
+        )
+      )}
     </Box>
   );
 };

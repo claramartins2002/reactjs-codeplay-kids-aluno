@@ -4,7 +4,7 @@ import { styles } from '../../utils/styles';
 
 const GameHeader = ({ gameStarted, onStartGame, game }) => {
   return (
-    <Box sx={styles.boxGameHeader}>
+    <Box sx={styles.boxGameHeader(game)}>
       <Typography variant="h3" sx={styles.title(game)}>
         {game}
       </Typography>

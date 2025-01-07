@@ -58,6 +58,13 @@ const gameColors = {
     hoverBackground: '#fbdeb2',
     border: '#f4a428'
   },
+  'Formas e Cores': {
+    text: '#fae8f9',
+    background: '#e274dd',
+    hoverText: '#e274dd',
+    hoverBackground: '#fae8f9',
+    border: '#e274dd'
+  },
   default: {
     text: '#e4f6f4',
     background: '#91ddcf',

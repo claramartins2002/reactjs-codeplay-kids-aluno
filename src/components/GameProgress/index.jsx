@@ -7,7 +7,7 @@ import ConfettiExplosion from 'react-confetti-explosion';
 const GameProgress = ({ message, questionCount, totalQuestions = 15, showConfetti }) => {
   return (
     <>
-      <Typography variant="h6" sx={{ mt: 2, color: green[600], fontStyle: 'italic', margin: 'auto' }} >
+      <Typography variant="h6" sx={{ mt: 2, color: green[600], fontStyle: 'italic', margin: '0 auto' }} >
         {message}
       </Typography>
       <LinearProgress

@@ -1,3 +1,73 @@
+.jogo-da-memória {
+  --bg-color: #456ff8;
+  --bg-color-light: #e8ebfe;
+  --text-color-hover: #FFF;
+  --box-shadow-color: rgba(69, 111, 248, 0.48);
+}
+
+.quebra-cabeça {
+  --bg-color: #f4a428;
+  --bg-color-light: #fbdeb2;
+  --text-color-hover: #FFF;
+  --box-shadow-color: rgba(244, 164, 40, .48);
+}
+
+.arraste-e-solte {
+  --bg-color: #6c27b8;
+  --bg-color-light: #eee5f6;
+  --text-color-hover: #FFF;
+  --box-shadow-color: rgba(108, 39, 184, .48);
+}
+
+.adição-de-números, .subtração-de-números, .multiplicação-de-números, .divisão-de-números {
+  --bg-color: #91ddcf;
+  --bg-color-light: #e4f6f4;
+  --text-color-hover: #4C5656;
+  --box-shadow-color: rgba(145, 221, 207, .48);
+}
+
+.caça-palavras {
+  --bg-color: #00da91;
+  --bg-color-light: #e0f9ec;
+  --text-color-hover: #FFF;
+  --box-shadow-color: rgba(0, 218, 145, .48);
+}
+
+.palavras-cruzadas {
+  --bg-color: #A5D6A7;
+  --bg-color-light: #e8f5e9;
+  --text-color-hover: #4C5656;
+  --box-shadow-color: rgba(165, 214, 167, .48);
+}
+
+.que-animal-é-esse-  {
+  --bg-color: #6fa3df;
+  --bg-color-light: #F2E8B3;
+  --text-color-hover: #4C5656;
+  --box-shadow-color: rgba(111, 163, 223, .48);
+}
+
+.que-horas-são- {
+  --bg-color: #f8ce45;
+  --bg-color-light: #fef7df;
+  --text-color-hover: #4C5656;
+  --box-shadow-color: rgba(248, 206, 69, .48);
+}
+
+.jogo-da-contagem {
+  --bg-color: #3c9fff;
+  --bg-color-light: #e4f3ff;
+  --text-color-hover: #FFF;
+  --box-shadow-color: rgba(60, 159, 255, .48);
+}
+
+.formas-e-cores {
+  --bg-color: #e274dd;
+  --bg-color-light: #fae8f9;
+  --text-color-hover: #FFF;
+  --box-shadow-color: rgba(226, 116, 221, .48);
+}
+
 .container-jogos {
   display: flex;
   flex-wrap: wrap;
@@ -6,81 +76,6 @@
   margin: 40px auto;
   max-width: 1200px;
   width: 100%;
-}
-
-.jogo-card{
-  background: white;
-  border: 1px solid #eee;
-  border-radius: 20px !important; 
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-  color: slate;
-  cursor: pointer;
-  flex-basis: calc(33% - 40px);
-  margin: 20px;
-  overflow: hidden;
-  padding: 40px;
-  position: relative;
-  transition: 0.5s ease all;
-}
-
-.jogo-card:before {
-  background: white;
-  border-radius: 10px; /* Ajuste no before */
-  height: 5px;
-  content: '';
-  left: 20px;
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  transition: 0.5s ease all;
-}
-
-.jogo-card h2, 
-.jogo-card p {
-  position: relative;
-  z-index: 2;
-  color: #9e9e9e;
-}
-
-.jogo-card h2 {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
-  margin: 0 0 20px 0;
-  padding: 0 0 10px 0;
-  text-decoration: none;
-}
-
-.jogo-card:hover h2 {
-  color: #ffffff; /* Efeito de mudança no hover */
-  transition: color 0.3s ease;
-}
-
-.jogo-card.purple:before {
-  background-image: linear-gradient(153deg, #EF33F2 0%, #3544DC 95%);
-}
-
-.jogo-card.yellow:before {
-  background-image: linear-gradient(153deg, #F8C332 0%, #FB8332 95%);
-}
-
-.jogo-card.green:before {
-  background-image: linear-gradient(153deg, #8ADC32 0%, #25C7A2 95%);
-}
-
-.jogo-card:hover {
-  border: 0;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  color: white;
-  transform: scale(1.05);
-  z-index: 2;
-}
-
-.jogo-card:hover:before {
-  border-radius: 20px;
-  left: 0;
-  height: 100%;
-  right: 0;
-  top: 0;
 }
 
 @media (max-width: 1200px) {
@@ -102,6 +97,149 @@
   text-align: center;
 }
 
-img {
+.icon-jogo-card {
   padding: 5%;
+  width: 90px;
+  height: 90px;
+}
+
+.card-jogo-nome {
+  color: #296494;
+  z-index: 1000;
+}
+
+.spectacledcoder-card2 {
+  display: flex;
+  margin: auto;
+  width: 200px;
+  height: 200px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 5px 5px 60px rgb(235, 235, 235), -5px -5px 60px rgb(237, 237, 237);
+  border-radius: 18px;
+  transition: all 2s;
+  align-items: start;
+  justify-content: center;
+}
+
+.circle2 {
+  position: absolute;
+  margin: auto;
+  margin-top: 35px;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(42, 42, 42);
+  border-radius: 50%;
+  transition: all 0.5s;
+    
+}
+.spectacledcoder-card2:hover .circle2 {
+  margin-top: 0px;
+  background-color: rgb(42, 42, 42);
+  width: 200px;
+  height: 200px;
+  border-radius: 15px;
+  transition: all 0.5s;
+}
+.spectacledcoder-card2:hover .content {
+  color: white;
+}
+
+.card {
+  width: 230px;
+  height: 341px;
+  background: #fff;
+  border-top-right-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 14px 26px rgba(0,0,0,0.04);
+  transition: all 0.3s ease-out;
+  text-decoration: none;
+  margin: 20px;
+  border: .6rem solid var(--bg-color);
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0,0,0,0.11),
+    0 24px 46px var(--box-shadow-color);
+  border: .5rem solid #FFF;
+}
+
+.card:hover .overlay {
+  transform: scale(4) translateZ(0);
+}
+
+.card:hover .circle {
+  border-color: var(--bg-color-light);
+  background: var(--bg-color);
+}
+
+.card:hover .circle:after {
+  background: var(--bg-color-light);
+}
+
+.card:hover p {
+  color: var(--text-color-hover);
+}
+
+.card:active {
+  transform: scale(1) translateZ(0);
+  box-shadow: 0 15px 24px rgba(0,0,0,0.11),
+    0 15px 24px var(--box-shadow-color);
+}
+
+.card p {
+  font-size: 20px;
+  color: #4C5656;
+  z-index: 1000;
+  transition: color 0.3s ease-out;
+  text-align: center;
+}
+
+.circle {
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease-out;
+}
+
+.circle:after {
+  content: "";
+  width: 118px;
+  height: 118px;
+  display: block;
+  position: absolute;
+  background: var(--bg-color);
+  border-radius: 50%;
+  top: 7px;
+  left: 7px;
+  transition: opacity 0.3s ease-out;
+}
+
+.circle img {
+  z-index: 10000;
+  transform: translateZ(0);
+}
+
+.overlay {
+  width: 118px;
+  position: absolute; 
+  height: 118px;
+  border-radius: 50%;
+  background: var(--bg-color);
+  top: 70px;
+  left: 50px;
+  z-index: 0;
+  transition: transform 0.3s ease-out;
 }

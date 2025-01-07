@@ -49,15 +49,20 @@ function Jogos() {
     <>
       <h3 class="submenu">Olá {studentName}! Aqui estão suas atividades pendentes</h3>
       <div className="container-jogos">
+
         {jogosPendentes.map((jogo) => (
-          <div key={jogo.id} className={`jogo-card ${jogo.cor || 'green'}`}>
-            <NavLink className='is-active' to={`${jogoRoutes[jogo.nome]}?id=${jogo.id}`}>
-              <center><img src={jogo.icone} alt='icon' width='100px' height='100px'/></center>
-              <h2>{jogo.nome}</h2>
-            </NavLink>
-          </div>
+          <NavLink to={`${jogoRoutes[jogo.nome]}?id=${jogo.id}`} className={`card ${jogo.nome.toLowerCase().replace(/\s+/g, '-').replace(/\?/g, '')}`}>
+            <div>
+              <div class="overlay"></div>
+              <div class="circle">
+                <img className="icon-jogo-card" src={jogo.icone} alt='icon'/>
+              </div>
+            </div>
+            <p>{jogo.nome}</p>
+          </NavLink>
         ))}
       </div>
+      
     </>
   )}
 

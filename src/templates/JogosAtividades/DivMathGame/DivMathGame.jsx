@@ -156,18 +156,20 @@ const DivMathGame = () => {
               selectedAnswer={selectedAnswer}
               correctAnswer={currentQuestion.correctAnswer}
             />
-            
-            <GameProgress 
-              message={message}
-              questionCount={questionCount}
-              showConfetti={showConfetti}
-            />
-            
-            <ScoreBoard 
-              score={score}
-              errors={errors}
-              questionCount={questionCount}
-            />
+
+            <div className="score-board-container">
+              <GameProgress 
+                message={message}
+                questionCount={questionCount}
+                showConfetti={showConfetti}
+              />
+              
+              <ScoreBoard 
+                score={score}
+                errors={errors}
+                questionCount={questionCount}
+              />
+            </div>
           </>
         )
       )}

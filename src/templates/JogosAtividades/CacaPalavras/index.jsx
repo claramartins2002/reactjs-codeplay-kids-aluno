@@ -21,6 +21,8 @@ export const CacaPalavras = () => {
   // Limpeza do áudio quando o componente for desmontado
   useEffect(() => {
     return () => {
+      document.title = "Caça Palavras";
+
       ambientSound.stop();
     };
   }, []);

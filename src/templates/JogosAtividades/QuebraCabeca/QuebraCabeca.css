@@ -3,19 +3,23 @@ body {
 
 }
 .puzzle-container {
-  max-width: 60%;
+  max-width: 90%;
   max-height: 60%;
   margin: 40px auto;
-  padding: 5%;
   font-family: 'Irish Grover';
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .puzzle-game {
-  width: 55%;
-  height: 55%;
+  width: 40%;
+  height: 40%;
   margin: auto;
+  background: #8fcdff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 24px 36px rgba(0,0,0,0.11),
+    0 24px 46px #8fcdff;
 }
 .game-menu {
   max-width: 70%;

@@ -12,10 +12,10 @@ export const styles = {
   },
 
   container: {
-    minHeight: '100vh',
+    minHeight: '80vh',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     flexDirection: 'column',
     padding: 1,
     background: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(231,231,246,1) 35%, rgba(175,223,253,1) 100%)',
@@ -60,5 +60,14 @@ export const styles = {
     fontWeight: 'bold',
     color: 'white',
     boxShadow: '0 0 5px rgba(0,0,0,0.2)',
+  },
+
+  titleBox: {
+    fontFamily: 'Irish Grover',
+    color: '#2787e7',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '10px'
   }
 }

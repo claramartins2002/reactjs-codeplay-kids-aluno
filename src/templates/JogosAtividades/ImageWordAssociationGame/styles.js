@@ -70,5 +70,13 @@ export const styles = {
     position: 'absolute',
     top: '80%',
     width: '50%',
+  },
+
+  titleBox: {
+    fontFamily: 'Irish Grover',
+    color: '#2787e7',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
   }
 }

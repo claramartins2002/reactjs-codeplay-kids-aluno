@@ -36,6 +36,7 @@ function PuzzleGame() {
   // Limpeza do áudio quando o componente for desmontado
     useEffect(() => {
       return () => {
+        document.title = "Quebra Cabeça";
         ambientSound.stop();
         correctSound.stop();
       };

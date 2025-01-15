@@ -40,6 +40,8 @@ const AddMathGame = () => {
   // Limpeza do áudio quando o componente for desmontado
   useEffect(() => {
     return () => {
+      document.title = "Adição de Números";
+
       ambientSound.stop();
       correctSound.stop();
       wrongSound.stop();
@@ -157,6 +159,7 @@ const AddMathGame = () => {
                 onAnswerClick={handleAnswer}
                 selectedAnswer={selectedAnswer}
                 correctAnswer={currentQuestion.correctAnswer}
+                game="Adição de Números"
               />
 
               <div className="score-board-container">

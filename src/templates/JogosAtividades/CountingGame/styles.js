@@ -36,10 +36,17 @@ export const styles = {
     boxShadow: '0 5px #2e7d32',
     transition: 'transform 0.3s, box-shadow 0.3s',
     color: 'white',
-    width: '75%',
+    width: '170px',
     fontFamily: 'Gorditas',
     mt: 2,
     '&:hover': { background: '#4CAF50', boxShadow: '0 5px #2e7d32' },
-    '&:active': { transform: 'translateY(6px)', boxShadow: '0' }
+    '&:active': { transform: 'translateY(6px)', boxShadow: '0' },
+    '&:hover:before, &:focus:before': {
+      transform: 'translateY(calc(-10px + -10px / 2.5))'
+    },
+    
+    '&:active:before': {
+      transform: 'translateY(calc(-10px / 10))'
+    }
   }
 }

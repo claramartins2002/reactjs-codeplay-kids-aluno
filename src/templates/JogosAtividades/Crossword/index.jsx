@@ -72,6 +72,8 @@ export default function CrosswordComponent() {
   // Limpeza do áudio quando o componente for desmontado
   useEffect(() => {
     return () => {
+      document.title = "Palavras Cruzadas";
+
       ambientSound.stop();
     };
   }, []);

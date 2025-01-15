@@ -24,7 +24,7 @@ const FRUIT_TYPES = [
 
 const generateFruits = (level) => {
   const fruits = [];
-  for (let i = 0; i < level + 2; i++) {
+  for (let i = 0; i < level + 1; i++) {
     const count = getRandomCount();
     const fruitType = FRUIT_TYPES[i % FRUIT_TYPES.length];
     for (let j = 0; j < count; j++) {
@@ -58,13 +58,15 @@ const CountingGame = () => {
   const [wrongSound] = useState(new AudioManager(erro, { allowMultiplePlays: true }));
 
   // Limpeza do áudio
-    useEffect(() => {
-      return () => {
-        ambientSound.stop();
-        correctSound.stop();
-        wrongSound.stop();
-      };
-    }, []);
+  useEffect(() => {
+    return () => {
+      document.title = "Jogo da Contagem";
+
+      ambientSound.stop();
+      correctSound.stop();
+      wrongSound.stop();
+    };
+  }, []);
 
   const countFruitsByType = () => {
     return FRUIT_TYPES.map((fruit) => ({
@@ -190,52 +192,58 @@ const CountingGame = () => {
               gameType='Quantas frutas têm ?'
             />
           ) : (
-            <Card sx={styles.card} >
-              <CardContent sx={{ display: 'flex', flexDirection: 'row-reverse', padding: '0 !important', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Box sx={styles.fruitsBox}>
-                  {fruits.map((fruit, index) => (
-                      <span key={index}>{fruit.icon}</span>
-                  ))}
-                </Box>
-                  <div className="fruits-container">
-                    {FRUIT_TYPES.map((fruit) => (
-                      <Box key={fruit.name} sx={{ margin: '0.5rem', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                        <span>{fruit.icon}</span>
-                        <span className="separator-answer">=</span>
-                        <input
-                          type="number"
-                          className="input-answer-fruits"
-                          value={userAnswers[fruit.name]}
-                          onChange={(e) => handleInputChange(fruit.name, e.target.value)}
-                        />
-                      </Box>
+            <>
+              <div className="counting-game-title">
+                <h1>Quantas Frutas têm ?</h1>
+                <span>Conte as frutas iguais e digite o número: </span>
+              </div>
+              <Card sx={styles.card} >
+                <CardContent sx={{ display: 'flex', flexDirection: 'row-reverse', padding: '0 !important', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Box sx={styles.fruitsBox}>
+                    {fruits.map((fruit, index) => (
+                        <span key={index}>{fruit.icon}</span>
                     ))}
-                    <Button
-                      variant="contained"
-                      onClick={checkAnswers}
-                      sx={styles.button}
-                    >
-                      Responder
-                    </Button>
-                  </div>
-
-                  <div className="score-board-container">
-                    <GameProgress 
-                      message={message}
-                      questionCount={questionCount}
-                      showConfetti={showConfetti}
-                      totalQuestions={7}
-                    />
-                    
-                    <ScoreBoard 
-                      score={score}
-                      errors={errors}
-                      questionCount={questionCount}
-                      totalQuestions={7}
-                    />
-                  </div>
-                </CardContent>
-            </Card>
+                  </Box>
+                    <div className="fruits-container">
+                      {FRUIT_TYPES.map((fruit) => (
+                        <Box key={fruit.name} sx={{ margin: '0.5rem', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                          <span>{fruit.icon}</span>
+                          <span className="separator-answer">=</span>
+                          <input
+                            type="number"
+                            className="input-answer-fruits"
+                            value={userAnswers[fruit.name]}
+                            onChange={(e) => handleInputChange(fruit.name, e.target.value)}
+                          />
+                        </Box>
+                      ))}
+                      <Button
+                        variant="contained"
+                        onClick={checkAnswers}
+                        sx={styles.button}
+                      >
+                        Responder
+                      </Button>
+                    </div>
+  
+                    <div className="score-board-container">
+                      <GameProgress 
+                        message={message}
+                        questionCount={questionCount}
+                        showConfetti={showConfetti}
+                        totalQuestions={7}
+                      />
+                      
+                      <ScoreBoard 
+                        score={score}
+                        errors={errors}
+                        questionCount={questionCount}
+                        totalQuestions={7}
+                      />
+                    </div>
+                  </CardContent>
+              </Card>
+            </>
           )
         )
       )}

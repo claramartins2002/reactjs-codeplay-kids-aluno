@@ -91,6 +91,16 @@ const ShapeColorGame = () => {
   const [correctSound] = useState(new AudioManager(acerto, { allowMultiplePlays: true }));
   const [wrongSound] = useState(new AudioManager(erro, { allowMultiplePlays: true }));
 
+  // Limpeza do áudio quando o componente for desmontado
+  useEffect(() => {
+    return () => {
+      document.title = "Formas e Cores";
+      ambientSound.stop();
+      correctSound.stop();
+      wrongSound.stop();
+    };
+  }, []);
+
   // Controle do cronômetro
   useEffect(() => {
     const timer = setInterval(() => {
@@ -146,7 +156,7 @@ const ShapeColorGame = () => {
  const saveGameReport = async () => {
   const relatorio = {
       aluno: {id: studentId}, // ID do aluno
-      tipoAtividade: 'Operações Matemáticas', // Tipo da atividade
+      tipoAtividade: 'Formas e Cores', // Tipo da atividade
       pontuacao: score,
       erros: errors,
       acertos: score,
@@ -192,6 +202,14 @@ useEffect(() => {
             </>
           ) : (
             <>
+              <Box sx={styles.titleBox}>
+                <Typography sx ={{fontFamily: 'Irish Grover', fontSize: '38px'}}>
+                  Formas e Cores
+                </Typography>
+                <Typography sx ={{fontFamily: 'Coming Soon'}}>
+                  Responda qual e a forma geométrica e sua cor
+                </Typography>
+              </Box>
               <Card sx={styles.card}>
                 <CardContent>
                   <Box sx={styles.box}>

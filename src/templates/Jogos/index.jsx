@@ -8,6 +8,8 @@ function Jogos() {
   const { studentId, studentName} = useContext(AuthContext);
 
   useEffect(() => {
+    document.title = "Atividades";
+
     const fetchJogosPendentes = async () => {
       try {
         const response = await fetch(`http://localhost:8080/atividade/getPendingByAluno/${studentId}`,
@@ -51,7 +53,7 @@ function Jogos() {
       <div className="container-jogos">
 
         {jogosPendentes.map((jogo) => (
-          <NavLink to={`${jogoRoutes[jogo.nome]}?id=${jogo.id}`} className={`card ${jogo.nome.toLowerCase().replace(/\s+/g, '-').replace(/\?/g, '')}`}>
+          <NavLink to={`${jogoRoutes[jogo.nome]}?id=${jogo.id}`} className={`card-atividade-aluno ${jogo.nome.toLowerCase().replace(/\s+/g, '-').replace(/\?/g, '')}`}>
             <div>
               <div class="overlay"></div>
               <div class="circle">

@@ -48,6 +48,15 @@ const MemoryCardGame = () => {
   const [ambientSound] = useState(new AudioManager(trilha, { loop: true, volume: 0.3 }));
   const [correctSound] = useState(new AudioManager(acerto, { allowMultiplePlays: true }));
 
+  // Limpeza do áudio quando o componente for desmontado
+  useEffect(() => {
+    return () => {
+      document.title = "Jogo da Memória";
+      ambientSound.stop();
+      correctSound.stop();
+    };
+  }, []);
+
   // Controle do cronômetro
   useEffect(() => {
     const timer = setInterval(() => {
@@ -194,7 +203,7 @@ const MemoryCardGame = () => {
                 ))}
               </div>
             </div>
-            <center><h3>Tentativas: {turns}</h3></center>
+            {/* <center><h3>Tentativas: {turns}</h3></center> */}
           </>
         )
         )

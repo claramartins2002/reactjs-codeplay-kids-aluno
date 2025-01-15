@@ -144,11 +144,11 @@
   color: white;
 }
 
-.card {
+.card-atividade-aluno {
   width: 230px;
   height: 341px;
   background: #fff;
-  border-top-right-radius: 10px;
+  border-radius: 10px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -162,37 +162,37 @@
   border: .6rem solid var(--bg-color);
 }
 
-.card:hover {
+.card-atividade-aluno:hover {
   transform: translateY(-5px) scale(1.005) translateZ(0);
   box-shadow: 0 24px 36px rgba(0,0,0,0.11),
     0 24px 46px var(--box-shadow-color);
   border: .5rem solid var(--bg-color-light);
 }
 
-.card:hover .overlay {
+.card-atividade-aluno:hover .overlay {
   transform: scale(4) translateZ(0);
 }
 
-.card:hover .circle {
+.card-atividade-aluno:hover .circle {
   border-color: var(--bg-color-light);
   background: var(--bg-color);
 }
 
-.card:hover .circle:after {
+.card-atividade-aluno:hover .circle:after {
   background: var(--bg-color-light);
 }
 
-.card:hover p {
+.card-atividade-aluno:hover p {
   color: var(--text-color-hover);
 }
 
-.card:active {
+.card-atividade-aluno:active {
   transform: scale(1) translateZ(0);
   box-shadow: 0 15px 24px rgba(0,0,0,0.11),
     0 15px 24px var(--box-shadow-color);
 }
 
-.card p {
+.card-atividade-aluno p {
   font-size: 20px;
   color: #4C5656;
   z-index: 1000;

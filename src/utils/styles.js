@@ -8,7 +8,8 @@ const gameColors = {
     hoverText: '#3c9fff',
     hoverBackground: '#e4f3ff',
     border: '#3c9fff',
-    backgroundContainer: '#ffab4a'
+    backgroundContainer: '#ffab4a',
+    boxShadowColor: '#ffce8f'
   },
   'Caça Palavras': {
     text: '#e0f9ec',
@@ -16,7 +17,8 @@ const gameColors = {
     hoverText: '#00da91',
     hoverBackground: '#e0f9ec',
     border: '#00da91',
-    backgroundContainer: '#f45b7e'
+    backgroundContainer: '#f45b7e',
+    boxShadowColor: '#fcb9c7'
   },
   'Que horas são ?': {
     text: '#fef7df',
@@ -24,15 +26,17 @@ const gameColors = {
     hoverText: '#f8ce45',
     hoverBackground: '#fef7df',
     border: '#f8ce45',
-    backgroundContainer: '#6f8afa'
+    backgroundContainer: '#6f8afa',
+    boxShadowColor: '#c5ccfc'
   },
   'Jogo da memória': {
-    text: '#e8ebfe',
+    text: '#FFF',
     background: '#456ff8',
     hoverText: '#456ff8',
     hoverBackground: '#e8ebfe',
     border: '#456ff8',
-    backgroundContainer: '#f8ce45'
+    backgroundContainer: '#f8ce45',
+    boxShadowColor: '#fce9af'
   },
   'Palavras Cruzadas': {
     text: '#FFF',
@@ -40,7 +44,8 @@ const gameColors = {
     hoverText: '#8BC34A',
     hoverBackground: '#FFF',
     border: '#8BC34A',
-    backgroundContainer: '#d6a5d4'
+    backgroundContainer: '#d6a5d4',
+    boxShadowColor: '#f4e9f4'
   },
   'Arrasta e Solta': {
     text: '#eee5f6',
@@ -48,7 +53,8 @@ const gameColors = {
     hoverText: '#6c27b8',
     hoverBackground: '#eee5f6',
     border: '#6c27b8',
-    backgroundContainer: '#81c82f'
+    backgroundContainer: '#81c82f',
+    boxShadowColor: '#a9d974'
   },
   'Que animal é esse ?': {
     text: '#F2E8B3',
@@ -56,7 +62,8 @@ const gameColors = {
     hoverText: '#6fa3df',
     hoverBackground: '#F2E8B3',
     border: '#6fa3df',
-    backgroundContainer: '#dfab6f'
+    backgroundContainer: '#dfab6f',
+    boxShadowColor: '#f1dabd'
   },
   'Quebra Cabeça': {
     text: '#fbdeb2',
@@ -64,7 +71,8 @@ const gameColors = {
     hoverText: '#f4a428',
     hoverBackground: '#fbdeb2',
     border: '#f4a428',
-    backgroundContainer: '#3babff'
+    backgroundContainer: '#3babff',
+    boxShadowColor: '#8fcdff'
   },
   'Formas e Cores': {
     text: '#fae8f9',
@@ -72,7 +80,8 @@ const gameColors = {
     hoverText: '#e274dd',
     hoverBackground: '#fae8f9',
     border: '#e274dd',
-    backgroundContainer: '#a1eaa2'
+    backgroundContainer: '#a1eaa2',
+    boxShadowColor: '#e8fae8'
   },
   default: {
     text: '#e4f6f4',
@@ -80,7 +89,8 @@ const gameColors = {
     hoverText: '#91ddcf',
     hoverBackground: '#e4f6f4',
     border: '#91ddcf',
-    backgroundContainer: '#dd919f'
+    backgroundContainer: '#dd919f',
+    boxShadowColor: '#f6e4e7'
   },
 };
 
@@ -102,6 +112,7 @@ export const styles = {
       flexDirection: 'column',
       margin: '20px auto',
       background: colors.backgroundContainer,
+      boxShadow: `-10px 10px 0px 2px ${colors.boxShadowColor}`,
       padding: '50px 30px',
       borderRadius: '20px',
     }
@@ -117,6 +128,15 @@ export const styles = {
       width: '400px',
       textAlign: 'center',
     }
+  },
+
+  titleGame: {
+    mb: 2,
+    color:'rgb(36, 189, 161)',
+    fontWeight: 'bold',
+    fontFamily: 'Irish Grover',
+    width: '400px',
+    textAlign: 'center',
   },
 
   startButton: (gameType) => {
@@ -168,7 +188,7 @@ export const styles = {
       border: `1rem solid ${colors.border}`,
       boxShadow: 'rgba(17, 12, 46, 0.15) 0px 48px 100px 0px',
       maxWidth: '50%',
-      margin: '10% auto',
+      margin: '5% auto',
     };
   },
 
@@ -177,8 +197,8 @@ export const styles = {
     return {
       padding: '10px',
       borderRadius: '15px',
-      width: '40%',
-      margin: 'auto',
+      width: '70%',
+      margin: '20px auto',
       background: colors.hoverBackground
     };
   },

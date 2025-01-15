@@ -16,7 +16,8 @@ const response = [
   { name: 'Maçã', type: 'Maçã', urlFront: 'https://cdn-icons-png.freepik.com/128/1038/1038574.png', urlShadow: 'https://cdn-icons-png.freepik.com/128/1038/1038625.png' },
   { name: 'Banana', type: 'Banana', urlFront: 'https://cdn-icons-png.freepik.com/128/3373/3373057.png', urlShadow: 'https://cdn-icons-png.freepik.com/128/3373/3373054.png' },
   { name: 'Uva', type: 'Uva', urlFront: 'https://cdn-icons-png.freepik.com/128/8719/8719094.png', urlShadow: 'https://cdn-icons-png.freepik.com/128/8719/8719095.png' },
-  { name: 'Melancia', type: 'Melancia', urlFront: 'https://cdn-icons-png.freepik.com/128/522/522666.png', urlShadow: 'https://cdn-icons-png.freepik.com/128/522/522768.png' }
+  { name: 'Melancia', type: 'Melancia', urlFront: 'https://cdn-icons-png.freepik.com/128/522/522666.png', urlShadow: 'https://cdn-icons-png.freepik.com/128/522/522768.png' },
+  { name: 'Laranja', type: 'Laranja', urlFront: 'https://cdn-icons-png.freepik.com/128/4076/4076599.png', urlShadow: 'https://cdn-icons-png.freepik.com/128/4076/4076650.png' }
 ];
 
 // Função para embaralhar a lista de boxes
@@ -63,6 +64,7 @@ export const Container = memo(function Container() {
   // Limpeza do áudio quando o componente for desmontado
   useEffect(() => {
     return () => {
+      document.title = "Arrasta e Solta";
       ambientSound.stop();
     };
   }, []);
@@ -164,6 +166,10 @@ export const Container = memo(function Container() {
       )}
       {gameStarted && (
         <>
+          <div className="dnd-game-title">
+            <h1>Arraste e Solte</h1>
+            <span>Arraste e solte a fruta na sua sombra: </span>
+          </div>
           <div className="dustbins-boxes-container">
             {dustbins.map(({ accepts, lastDroppedItem }, index) => (
               <Dustbin

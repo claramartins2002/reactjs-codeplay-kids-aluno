@@ -67,6 +67,14 @@
   margin-top: 2rem;
 }
 
-.score-board-container {
-  
+.counting-game-title {
+  font-family: 'Irish Grover';
+  color: #2787e7;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.counting-game-title span {
+  font-family: 'Coming Soon';
 }

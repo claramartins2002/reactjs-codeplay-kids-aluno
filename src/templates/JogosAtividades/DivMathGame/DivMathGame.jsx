@@ -40,6 +40,8 @@ const DivMathGame = () => {
   // Limpeza do áudio quando o componente for desmontado
   useEffect(() => {
     return () => {
+      document.title = "Divisão de Números";
+
       ambientSound.stop();
       correctSound.stop();
       wrongSound.stop();
@@ -133,44 +135,48 @@ const DivMathGame = () => {
 
   return (
     <Box sx={styles.container}>
-      <GameHeader 
-        gameStarted={gameStarted} 
-        onStartGame={startGame}
-      />
-
-      {gameStarted && (
-        gameOver ? (
-          <GameOver 
-            score={score}
-            errors={errors}
-            elapsedTime={elapsedTime}
-            feedback={feedback}
-            onRestart={restartGame}
-          />
-        ) : (
-          <>
-            <QuestionCard 
-              question={currentQuestion.question}
-              answers={currentQuestion.answers}
-              onAnswerClick={handleAnswer}
-              selectedAnswer={selectedAnswer}
-              correctAnswer={currentQuestion.correctAnswer}
+      {!gameStarted ? (
+        <GameHeader 
+          gameStarted={gameStarted} 
+          onStartGame={startGame}
+          game="Divisão de Números"
+        />
+      ) : (
+        gameStarted && (
+          gameOver ? (
+            <GameOver 
+              score={score}
+              errors={errors}
+              elapsedTime={elapsedTime}
+              feedback={feedback}
+              onRestart={restartGame}
             />
+          ) : (
+            <>
+              <QuestionCard 
+                question={currentQuestion.question}
+                answers={currentQuestion.answers}
+                onAnswerClick={handleAnswer}
+                selectedAnswer={selectedAnswer}
+                correctAnswer={currentQuestion.correctAnswer}
+                game="Divisão de Números"
+              />
 
-            <div className="score-board-container">
-              <GameProgress 
-                message={message}
-                questionCount={questionCount}
-                showConfetti={showConfetti}
-              />
-              
-              <ScoreBoard 
-                score={score}
-                errors={errors}
-                questionCount={questionCount}
-              />
-            </div>
-          </>
+              <div className="score-board-container">
+                <GameProgress 
+                  message={message}
+                  questionCount={questionCount}
+                  showConfetti={showConfetti}
+                />
+                
+                <ScoreBoard 
+                  score={score}
+                  errors={errors}
+                  questionCount={questionCount}
+                />
+              </div>
+            </>
+          )
         )
       )}
     </Box>

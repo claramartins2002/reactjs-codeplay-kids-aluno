@@ -9,7 +9,7 @@
   height: 300px;
   border-radius: 50%;
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
@@ -284,4 +284,17 @@
   position: absolute;
   top: 80%;
   width: 50%;
+}
+
+.clock-game-title {
+  font-family: 'Irish Grover';
+  color: #d3aa17;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: -40%;
+}
+
+.clock-game-title span {
+  font-family: 'Coming Soon';
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Button, Card, CardContent, Box } from '@mui/material';
+import { Button, Card, CardContent, Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { AuthContext } from '../../../AuthContext';
 import { useSearchParams } from 'react-router-dom';
@@ -63,6 +63,7 @@ const ImageWordAssociationGame = () => {
   // Limpeza do áudio quando o componente for desmontado
   useEffect(() => {
     return () => {
+      document.title = "Que animal é esse ?";
       ambientSound.stop();
       correctSound.stop();
       wrongSound.stop();
@@ -163,7 +164,7 @@ const ImageWordAssociationGame = () => {
   const saveGameReport = async () => {
   const relatorio = {
     aluno: {id: studentId}, // ID do aluno
-    tipoAtividade: 'Operações Matemáticas', // Tipo da atividade
+    tipoAtividade: 'Soletrando', // Tipo da atividade
     pontuacao: score,
     erros: errors,
     acertos: score,
@@ -208,6 +209,14 @@ const ImageWordAssociationGame = () => {
         />
       ) : (
         <>
+          <Box sx={styles.titleBox}>
+            <Typography sx ={{fontFamily: 'Irish Grover', fontSize: '38px'}}>
+              Que animal é esse ?
+            </Typography>
+            <Typography sx ={{fontFamily: 'Coming Soon'}}>
+              Escolha as letras que formam o nome do animal
+            </Typography>
+          </Box>
           <Card sx={styles.card}>
             <CardContent>
               <img

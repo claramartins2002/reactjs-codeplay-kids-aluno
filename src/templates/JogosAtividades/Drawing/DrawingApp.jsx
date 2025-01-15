@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactPainter from 'react-painter';
 import './DrawingApp.css';
 
 function DrawingApp() {
   const [isEraser, setIsEraser] = useState(false); // Estado para alternar borracha
   const [lineTexture, setLineTexture] = useState('round'); // Estado para textura do traço
+
+  // Limpeza do áudio quando o componente for desmontado
+  useEffect(() => {
+    return () => {
+      document.title = "Desenho Livre";
+    };
+  }, []);
 
   const toggleEraser = (setColor) => {
     setIsEraser((prev) => !prev);

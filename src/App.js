@@ -12,7 +12,6 @@ import ShapeColorGame from './templates/JogosAtividades/ShapeColorGame/ShapeColo
 import CountingGame from './templates/JogosAtividades/CountingGame/CountingGame';
 import DrawingApp from './templates/JogosAtividades/Drawing/DrawingApp'
 import CrosswordComponent from './templates/JogosAtividades/Crossword';
-import StoreGame from './templates/JogosAtividades/StoreGame/components/StoreGame';
 import Jogos from './templates/Jogos';
 import SubsMathGame from './templates/JogosAtividades/SubsMathGame/SubsMathGame';
 import MultMathGame from './templates/JogosAtividades/MultMathGame/MultMathGame';
@@ -51,7 +50,6 @@ function App() {
         <Route path="/jogos/shape-color" element={isAuthenticated ? <ShapeColorGame /> : <Navigate to="/login" />} />
         <Route path="/jogos/counting" element={isAuthenticated ? <CountingGame /> : <Navigate to="/login" />} />
         <Route path="/jogos/drawing" element={isAuthenticated ? <DrawingApp /> : <Navigate to="/login" />} />
-        <Route path="/jogos/store" element={isAuthenticated ? <StoreGame /> : <Navigate to="/login" />} />
         <Route path="/jogos/relogio-horas" element={isAuthenticated ? <Clock /> : <Navigate to="/login" />} />
       </Routes>
     </Router>

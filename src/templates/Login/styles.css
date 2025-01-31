@@ -1,12 +1,15 @@
 #h2-txt {
-    font-family: 'Irish Grover';
-    color: gray;
-
+  font-family: 'Irish Grover';
+  color: gray;
 }
 #btn-login{
-   background-color: #ff8543;
-   font-family: 'Irish Grover';
+  font-family: 'Irish Grover';
+  font-size: 20px;
+  background-color: #ff8543;
+  width: 80%;
+  margin: auto;
+  border-radius: 30px;
 }
 body {
-    background-color:rgb(244, 247, 246);
+  background-color:rgb(244, 247, 246);
 }

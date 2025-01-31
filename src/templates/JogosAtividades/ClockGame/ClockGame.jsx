@@ -177,10 +177,6 @@ const ClockGame = () => {
             />
           ) : (
             <>
-              <div className="clock-game-title">
-                <h1>Que horas são ?</h1>
-                <span>Responda qual o horário que está no relógio: </span>
-              </div>
               <div className="clock">
                 {/* Ponteiro das horas */}
                 <div

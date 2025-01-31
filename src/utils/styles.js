@@ -96,7 +96,7 @@ const gameColors = {
 
 export const styles = {
   container: {
-    minHeight: '80vh',
+    minHeight: '50vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -135,7 +135,7 @@ export const styles = {
     color:'rgb(36, 189, 161)',
     fontWeight: 'bold',
     fontFamily: 'Irish Grover',
-    width: '400px',
+    width: '600px',
     textAlign: 'center',
   },
 

@@ -285,16 +285,3 @@
   top: 80%;
   width: 50%;
 }
-
-.clock-game-title {
-  font-family: 'Irish Grover';
-  color: #d3aa17;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin-top: -40%;
-}
-
-.clock-game-title span {
-  font-family: 'Coming Soon';
-}
